@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="classes">
+        <item>Little Gems</item>
+        <item>KG 1</item>
+        <item>KG 2</item>
+        <item>Grade 1</item>
+        <item>Grade 2</item>
+        <item>Grade 3</item>
+        <item>Grade 4</item>
+        <item>Grade 5</item>
+        <item>Grade 6</item>
+        <item>Grade 7</item>
+        <item>Grade 8</item>
+    </string-array>
+
+    <string-array name="kids">
+        <item> Please select the kid to display diary: </item>
+        <item> Jayden Munene </item>
+        <item> Ryan Otieno </item>
+        <item> Pretty Betty </item>
+    </string-array>
+</resources>

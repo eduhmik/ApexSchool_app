@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="Account" />
+        <item
+            android:id="@+id/nav_schools"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="SCHOOLS"/>
+        <item
+            android:id="@+id/nav_select_school"
+            android:icon="@drawable/ic_subdirectory_arrow_left_black_24dp"
+            android:title="SELECTED SCHOOL"/>
+    </group>
+
+</menu>
