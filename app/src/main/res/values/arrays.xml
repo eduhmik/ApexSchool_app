@@ -20,4 +20,44 @@
         <item> Ryan Otieno </item>
         <item> Pretty Betty </item>
     </string-array>
+    <string-array name="children">
+        <item> Select An Option: </item>
+        <item> For All Students </item>
+        <item> Ryan Otieno </item>
+        <item> Pretty Betty </item>
+        <item> Mark Munene </item>
+        <item> Ryan Otieno </item>
+        <item> Pretty Sunny </item>
+        <item> Marto Munene </item>
+        <item> Ryan Kenn </item>
+        <item> Sandy Betty </item>
+    </string-array>
+    <string-array name="schools">
+        <item> Select An Option: </item>
+        <item> SCHOOL 1</item>
+        <item> SCHOOL 2</item>
+        <item> SCHOOL 3 </item>
+        <item> SCHOOL 4 </item>
+        <item> SCHOOL 5 </item>
+        <item> SCHOOL 6 </item>
+
+    </string-array>
+
+    <string-array name="child">
+        <item> For All Students </item>
+        <item> Ryan Otieno </item>
+        <item> Pretty Betty </item>
+        <item> Mark Munene </item>
+        <item> Ryan Otieno </item>
+        <item> Pretty Sunny </item>
+        <item> Marto Munene </item>
+        <item> Ryan Kenn </item>
+        <item> Sandy Betty </item>
+    </string-array>
+
+    <string-array name="acc_type">
+        <item>Income</item>
+        <item>Expense</item>
+    </string-array>
+
 </resources>

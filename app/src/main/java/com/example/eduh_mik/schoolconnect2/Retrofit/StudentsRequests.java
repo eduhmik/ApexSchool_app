@@ -1,0 +1,17 @@
+package com.example.eduh_mik.schoolconnect2.Retrofit;
+
+import com.example.eduh_mik.schoolconnect2.models.ListModel;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+
+public interface StudentsRequests {
+    @GET("students")
+    Call<ArrayList<ListModel>> getPrepareListData();
+
+    @GET("stlist/id/{id}")
+    Call<ArrayList<ListModel>> getFilteredListData(@Path("id") int id);
+}

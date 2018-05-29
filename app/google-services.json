@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "292278596643",
+    "firebase_url": "https://apex-school-a945d.firebaseio.com",
+    "project_id": "apex-school-a945d",
+    "storage_bucket": "apex-school-a945d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292278596643:android:51fbf1e33f613bff",
+        "android_client_info": {
+          "package_name": "com.example.eduh_mik.schoolconnect2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292278596643-e5ct40jtaqrlmqj0amj62k3ccbj7tj0h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eduh_mik.schoolconnect2",
+            "certificate_hash": "e20b2d71751f7173d69eec36cf96d3849df0f8dd"
+          }
+        },
+        {
+          "client_id": "292278596643-muitivjqaa8prc46tthfuqduk7v9ibjm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-Ib2ESX_eeKBdbWudesnYvnGRfjc9ci8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292278596643-muitivjqaa8prc46tthfuqduk7v9ibjm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
