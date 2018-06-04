@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by Eduh_mik on 4/21/2018.
  */
 
-public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesViewHolder>  {
+public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesViewHolder> {
 
     private Context context;
     private ArrayList<Activities> activitiesList;

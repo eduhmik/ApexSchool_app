@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.eduh_mik.schoolconnect2.R;
 import com.example.eduh_mik.schoolconnect2.activities.StudentActivity;
+import com.example.eduh_mik.schoolconnect2.appdata.AppData;
 import com.example.eduh_mik.schoolconnect2.models.ListModel;
 import com.google.gson.Gson;
 
@@ -24,11 +26,10 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
     TextView textFirstname;
     @BindView(R.id.txt_lastname)
     TextView txtLastname;
-    @BindView(R.id.text_view_code)
-    TextView textViewCode;
+//    @BindView(R.id.text_view_code)
+//    TextView textViewCode;
     @BindView(R.id.card_class)
     CardView cardClass;
-
 
     private Context _context;
 
@@ -41,14 +42,15 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
     public void bind(final ListModel listModel) {
         textFirstname.setText(listModel.getFirst_name());
         txtLastname.setText(listModel.getLast_name());
-        textViewCode.setText(listModel.getClass_id());
-        //Glide.with(_context).load(listModel.getImage()).into(imageViewFlag);
+        //textViewCode.setText(listModel.getClass_id());
+        Glide.with(_context).load(AppData.IMAGE_URL+listModel.getImage()).into(imageViewFlag);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(_context, StudentActivity.class);
                 Log.e("", String.valueOf(listModel));
                 intent.putExtra("list", new Gson().toJson(listModel));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 _context.startActivity(intent);
             }
         });

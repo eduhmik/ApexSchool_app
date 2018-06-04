@@ -26,7 +26,7 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamVH> {
     @Override
     public ExamVH onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.exam_layout, parent, false);
+                .inflate(R.layout.exam_layout_item, parent, false);
         return new ExamVH(context, itemView);
     }
 

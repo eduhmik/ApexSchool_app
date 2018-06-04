@@ -1,10 +1,7 @@
 package com.example.eduh_mik.schoolconnect2.models;
 
-import android.graphics.drawable.Drawable;
-
 public class ListModel {
-   String first_name, last_name, class_id, student_id;
-   Drawable image;
+   String first_name, last_name, class_id, student_id, image;
 
 
     public String getStudent_id() {
@@ -13,15 +10,6 @@ public class ListModel {
 
     public void setStudent_id(String student_id) {
         this.student_id = student_id;
-    }
-
-    public ListModel(String first_name, String last_name, String class_id, String student_id, Drawable image) {
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.class_id = class_id;
-        this.student_id = student_id;
-        this.image = image;
-
     }
 
     public String getFirst_name() {
@@ -48,11 +36,8 @@ public class ListModel {
         this.class_id = class_id;
     }
 
-    public Drawable getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Drawable image) {
-        this.image = image;
-    }
 }

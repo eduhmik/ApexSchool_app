@@ -2,12 +2,14 @@ package com.example.eduh_mik.schoolconnect2.adapters.viewholders;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.eduh_mik.schoolconnect2.R;
+import com.example.eduh_mik.schoolconnect2.appdata.AppData;
 import com.example.eduh_mik.schoolconnect2.models.Gallery;
 
 import butterknife.BindView;
@@ -33,7 +35,8 @@ public class GalleryViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Gallery gallery) {
         tvText.setText(gallery.getDescr());
-        Glide.with(_context).load(gallery.getName()).into(imageView);
+        Log.e("image", AppData.GALLERY_URL+gallery.getImage());
+        Glide.with(_context).load(AppData.GALLERY_URL+gallery.getImage()).into(imageView);
     }
 
 }

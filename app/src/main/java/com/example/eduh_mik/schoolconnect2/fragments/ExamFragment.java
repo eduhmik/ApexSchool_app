@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -66,13 +65,13 @@ public class ExamFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_exam, container, false);
         ButterKnife.bind(this, view);
-        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                showdialog();
-            }
-        });
+//        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
+//        myFab.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//                showdialog();
+//            }
+//        });
         return view;
     }
 
@@ -99,6 +98,7 @@ public class ExamFragment extends BaseFragment {
                 try {
                     if (TextUtils.equals(response.body().getStatus(), "success")) {
                         ArrayList<Exam> response1 = response.body().getList();
+                        examList.clear();
                         examList.addAll(response1);
                         Log.e("Fees", gson.toJson(response.body()));
                         examAdapter = new ExamAdapter(getContext(), examList);
@@ -108,6 +108,8 @@ public class ExamFragment extends BaseFragment {
                     }
                 }catch (Exception e){
                     e.printStackTrace();
+                    examList.clear();
+                    examAdapter.notifyDataSetChanged();
                 }
             }
 

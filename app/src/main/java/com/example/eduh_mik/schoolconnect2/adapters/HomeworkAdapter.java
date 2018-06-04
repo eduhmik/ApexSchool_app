@@ -12,9 +12,11 @@ import com.example.eduh_mik.schoolconnect2.models.Homework;
 
 import java.util.List;
 
+import butterknife.OnClick;
+
 public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkVH> {
 
-    
+
     private Context context;
     private List<Homework> homeworkList;
 
@@ -27,7 +29,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkVH> {
     @Override
     public HomeworkVH onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.homework_layout, parent, false);
+                .inflate(R.layout.homework_layout_item, parent, false);
         return new HomeworkVH(context, itemView);
     }
 
@@ -42,4 +44,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkVH> {
         return homeworkList.size();
     }
 
+    @OnClick(R.id.card_diary)
+    public void onViewClicked() {
+    }
 }

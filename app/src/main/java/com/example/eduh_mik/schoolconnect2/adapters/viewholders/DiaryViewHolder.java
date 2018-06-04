@@ -20,8 +20,6 @@ public class DiaryViewHolder extends RecyclerView.ViewHolder {
    //public TextView tvName,tvDescription, tvStartDate;
     @BindView(R.id.tv_Name)
     TextView tvName;
-    @BindView(R.id.tv_class)
-    TextView tvDescription;
     @BindView(R.id.tv_startDate)
     TextView tvStartDate;
     @BindView(R.id.tv_content)
@@ -41,9 +39,9 @@ public class DiaryViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Diary diary) {
-        tvName.setText(diary.getFirst_name()+" "+diary.getLast_name());
+        tvName.setText("Term 2");
         tvContent.setText(diary.getDescription());
-        tvDescription.setText(diary.getClass_id());
+        //tvDescription.setText(diary.getClass_id());
         tvStartDate.setText(diary.getDate());
         etDay.setText(diary.getDay());
     }

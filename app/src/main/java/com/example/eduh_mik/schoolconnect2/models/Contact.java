@@ -5,12 +5,15 @@ package com.example.eduh_mik.schoolconnect2.models;
  */
 
 public class Contact {
-    String first_name, role, phone, email;
+    String first_name, role, phone, phone2, email;
 
-    public Contact(String name, String role, String phone, String email){
+
+    public Contact(String name, String role, String phone, String phone2, String email){
         this.first_name = name;
         this.role = role;
         this.phone = phone;
+        this.phone2 = phone2;
+
         this.email = email;
     }
 
@@ -26,6 +29,9 @@ public class Contact {
         return phone;
     }
 
+    public String getPhone2() {
+        return phone2;
+    }
     public String getEmail() {
         return email;
     }

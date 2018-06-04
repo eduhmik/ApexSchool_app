@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -67,13 +66,13 @@ public class FeesFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fees, container, false);
         ButterKnife.bind(this, view);
-        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                showdialog();
-            }
-        });
+//        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
+//        myFab.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//                showdialog();
+//            }
+//        });
         return view;
     }
 
@@ -96,19 +95,24 @@ public class FeesFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ListResponse<Fees>> call, Response<ListResponse<Fees>> response) {
                 Log.e("fees", gson.toJson(response.body()));
-                Log.e("Status",response.body().getStatus());
-                if(TextUtils.equals(response.body().getStatus(),"success")){
-                    ArrayList<Fees> response1 = response.body().getList();
-                    feesList.addAll(response1);
-                    Log.e("Fees", gson.toJson(response.body()));
-                    feesAdapter = new FeesAdapter(getContext(),feesList);
-                    recyclerView.setAdapter(feesAdapter);
-                }else{
-                    showToast("Please try again");
+                Log.e("Status", response.body().getStatus());
+                try {
+                    if (TextUtils.equals(response.body().getStatus(), "success")) {
+                        ArrayList<Fees> response1 = response.body().getList();
+                        feesList.clear();
+                        feesList.addAll(response1);
+                        Log.e("Fees", gson.toJson(response.body()));
+                        feesAdapter = new FeesAdapter(getContext(), feesList);
+                        recyclerView.setAdapter(feesAdapter);
+                    } else {
+                        showToast("Please try again");
+                    }
+
+                } catch (Exception e){
+                    feesList.clear();
+                    feesAdapter.notifyDataSetChanged();
                 }
-
             }
-
             @Override
             public void onFailure(Call<ListResponse<Fees>> call, Throwable t) {
                 Log.e("fees", t.getMessage());

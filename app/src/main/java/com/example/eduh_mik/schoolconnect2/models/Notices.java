@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class Notices {
 
-    String e_id, title, venue, description, date;
+    String e_id, title, time, description, date;
 
     public String getE_id() {
         return e_id;
@@ -19,8 +19,8 @@ public class Notices {
         return title;
     }
 
-    public String getVenue() {
-        return venue;
+    public String getTime() {
+        return time;
     }
 
     public String getDescription() {
@@ -38,7 +38,6 @@ public class Notices {
             e.printStackTrace();
             return "";
         }
-
     }
 
     public String getDay(){

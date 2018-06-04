@@ -2,17 +2,11 @@ package com.example.eduh_mik.schoolconnect2.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,10 +27,7 @@ import com.example.eduh_mik.schoolconnect2.base.BaseFragment;
 import com.example.eduh_mik.schoolconnect2.interfaces.OnFragmentInteractionListener;
 import com.example.eduh_mik.schoolconnect2.models.Gallery;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +48,7 @@ public class GalleryFragment extends BaseFragment {
     private OnFragmentInteractionListener mListener;
     private GalleryAdapter galleryAdapter;
     private ArrayList<Gallery> galleryList = new ArrayList<>();
-   Uri initialURI;
+    Uri initialURI;
 
     public GalleryFragment() {
         // Required empty public constructor
@@ -77,66 +68,66 @@ public class GalleryFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
-        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Choose Image Source");
-                builder.setItems(new CharSequence[] {"Gallery", "Camera"},
-                        new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which) {
-                                    case 0:
-
-                                        // GET IMAGE FROM THE GALLERY
-                                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                                        intent.setType("image/*");
-
-                                        Intent chooser = Intent.createChooser(intent, "Choose a Picture");
-                                        startActivityForResult(chooser, ACTION_REQUEST_GALLERY);
-
-                                        break;
-
-                                    case 1:
-                                        Intent getCameraImage = new Intent("android.media.action.IMAGE_CAPTURE");
-
-                                        File cameraFolder;
-
-                                        if (android.os.Environment.getExternalStorageState().equals
-                                                (android.os.Environment.MEDIA_MOUNTED))
-                                            cameraFolder = new File(android.os.Environment.getExternalStorageDirectory(),
-                                                    "some_directory_to_save_images/");
-                                        else
-                                            cameraFolder=getActivity().getCacheDir();
-                                        if(!cameraFolder.exists())
-                                            cameraFolder.mkdirs();
-
-                                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
-                                        String timeStamp = dateFormat.format(new Date());
-                                        String imageFileName = "picture_" + timeStamp + ".jpg";
-
-                                        File photo = new File(Environment.getExternalStorageDirectory(),
-                                                "some_directory_to_save_images/" + imageFileName);
-                                        getCameraImage.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
-                                        initialURI = Uri.fromFile(photo);
-
-                                        startActivityForResult(getCameraImage, ACTION_REQUEST_CAMERA);
-
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                            }
-                        });
-
-                builder.show();
-            }
-
-        });
+//        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
+//        myFab.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                builder.setTitle("Choose Image Source");
+//                builder.setItems(new CharSequence[] {"Gallery", "Camera"},
+//                        new DialogInterface.OnClickListener() {
+//
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                switch (which) {
+//                                    case 0:
+//
+//                                        // GET IMAGE FROM THE GALLERY
+//                                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                                        intent.setType("image/*");
+//
+//                                        Intent chooser = Intent.createChooser(intent, "Choose a Picture");
+//                                        startActivityForResult(chooser, ACTION_REQUEST_GALLERY);
+//
+//                                        break;
+//
+//                                    case 1:
+//                                        Intent getCameraImage = new Intent("android.media.action.IMAGE_CAPTURE");
+//
+//                                        File cameraFolder;
+//
+//                                        if (android.os.Environment.getExternalStorageState().equals
+//                                                (android.os.Environment.MEDIA_MOUNTED))
+//                                            cameraFolder = new File(android.os.Environment.getExternalStorageDirectory(),
+//                                                    "some_directory_to_save_images/");
+//                                        else
+//                                            cameraFolder=getActivity().getCacheDir();
+//                                        if(!cameraFolder.exists())
+//                                            cameraFolder.mkdirs();
+//
+//                                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
+//                                        String timeStamp = dateFormat.format(new Date());
+//                                        String imageFileName = "picture_" + timeStamp + ".jpg";
+//
+//                                        File photo = new File(Environment.getExternalStorageDirectory(),
+//                                                "some_directory_to_save_images/" + imageFileName);
+//                                        getCameraImage.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
+//                                        initialURI = Uri.fromFile(photo);
+//
+//                                        startActivityForResult(getCameraImage, ACTION_REQUEST_CAMERA);
+//
+//                                        break;
+//
+//                                    default:
+//                                        break;
+//                                }
+//                            }
+//                        });
+//
+//                builder.show();
+//            }
+//
+//        });
         ButterKnife.bind(this, view);
         return view;
     }
@@ -144,7 +135,7 @@ public class GalleryFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        prepareGalleryData(getContext());
+        prepareGalleryData();
     }
 
     @Override
@@ -154,10 +145,10 @@ public class GalleryFragment extends BaseFragment {
         RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(getActivity());
         //sectionsAdapter = new SectionsAdapter(sections);
         recyclerView.setLayoutManager(layoutManager);
-        prepareGalleryData(getContext());
+        prepareGalleryData();
     }
 
-    private void prepareGalleryData(Context context) {
+    private void prepareGalleryData() {
         GalleryRequests service = ServiceGenerator.createService(GalleryRequests.class);
         Call<ListResponse<Gallery>> call = service.getGallery();
         call.enqueue(new Callback<ListResponse<Gallery>>() {
@@ -168,6 +159,7 @@ public class GalleryFragment extends BaseFragment {
                     Log.e("Status",response.body().getStatus());
                     if (TextUtils.equals(response.body().getStatus(), "success")) {
                         ArrayList<Gallery> response1 = response.body().getList();
+                        galleryList.clear();
                         galleryList.addAll(response1);
                         Log.e("Fees", gson.toJson(response.body()));
                         galleryAdapter = new GalleryAdapter(getContext(), galleryList);
@@ -177,6 +169,8 @@ public class GalleryFragment extends BaseFragment {
                     }
                 }catch (Exception e){
                     e.printStackTrace();
+                    galleryList.clear();
+                    galleryAdapter.notifyDataSetChanged();
                 }
             }
 

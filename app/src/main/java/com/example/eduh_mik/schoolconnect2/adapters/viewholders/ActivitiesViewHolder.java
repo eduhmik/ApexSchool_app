@@ -20,14 +20,14 @@ public class ActivitiesViewHolder extends RecyclerView.ViewHolder {
     //public TextView tvName,tvDescription, tvStartDate;
     @BindView(R.id.tv_startDate)
     TextView tvStartDate;
+    @BindView(R.id.tv_day)
+    TextView tvDay;
     @BindView(R.id.et_activity1)
     TextView etActivity1;
     @BindView(R.id.et_activity2)
     TextView etActivity2;
     @BindView(R.id.et_activity3)
     TextView etActivity3;
-    @BindView(R.id.tv_day)
-    TextView etDay;
 
 
 
@@ -42,9 +42,10 @@ public class ActivitiesViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Activities activities) {
         tvStartDate.setText(activities.getDate());
-        etDay.setText(activities.getDay());
-        etActivity1.setText(activities.getDescr());
-
+        tvDay.setText(activities.getDay());
+        etActivity1.setText(activities.getAct1());
+        etActivity2.setText(activities.getAct2());
+        etActivity3.setText(activities.getAct3());
         //Calendar calendarNow = Calendar.getInstance();
         //tvStartDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(calendarNow));
         //date = tvStartDate.toString();

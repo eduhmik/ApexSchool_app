@@ -17,18 +17,16 @@ import butterknife.OnClick;
  */
 
 public class NoticesViewHolder extends RecyclerView.ViewHolder {
-    //public TextView tvName,tvDescription, tvStartDate;
+    @BindView(R.id.tv_date)
+    TextView tvDate;
+    @BindView(R.id.tv_day)
+    TextView tvDay;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
     @BindView(R.id.tv_notice)
-    TextView tvName;
-    @BindView(R.id.tv_Description)
+    TextView tvNotice;
+    @BindView(R.id.tv_description)
     TextView tvDescription;
-    @BindView(R.id.tv_startDate)
-    TextView tvStartDate;
-    @BindView(R.id.et_day)
-    TextView etDaay;
-
-
-
 
     private Context _context;
 
@@ -39,10 +37,11 @@ public class NoticesViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Notices notices) {
-        tvName.setText(notices.getTitle());
+        tvNotice.setText(notices.getTitle());
         tvDescription.setText(notices.getDescription());
-        tvStartDate.setText(notices.getDate());
-        etDaay.setText(notices.getDay());
+        tvDate.setText(notices.getDate());
+        tvDay.setText(notices.getDay());
+        tvTime.setText(notices.getTime());
 
         //Calendar calendarNow = Calendar.getInstance();
         //tvStartDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(calendarNow));

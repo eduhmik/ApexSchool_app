@@ -8,21 +8,26 @@ import java.util.Date;
  */
 
 public class Activities {
-    String name, descr, date;
+    String act1, act2, act3, act4, date;
 
-    public Activities(String name, String descr, String date) {
+    public Activities(String act1, String act2, String act3, String act4) {
 
-        this.name = name;
-        this.descr = descr;
-        this.date = date;
     }
 
-    public String getName() {
-        return name;
+    public String getAct1() {
+        return act1;
     }
 
-    public String getDescr() {
-        return descr;
+    public String getAct2() {
+        return act2;
+    }
+
+    public String getAct3() {
+        return act3;
+    }
+
+    public String getAct4() {
+        return act4;
     }
 
     public String getDate() {

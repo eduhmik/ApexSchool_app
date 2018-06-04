@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by Eduh_mik on 4/21/2018.
  */
 
-public class NoticesAdapter extends RecyclerView.Adapter<NoticesViewHolder>  {
+public class NoticesAdapter extends RecyclerView.Adapter<NoticesViewHolder> {
 
     private Context context;
     private ArrayList<Notices> noticesList;

@@ -19,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.eduh_mik.schoolconnect2.R;
 import com.example.eduh_mik.schoolconnect2.adapters.MainPagerAdapter;
+import com.example.eduh_mik.schoolconnect2.appdata.AppData;
 import com.example.eduh_mik.schoolconnect2.base.BaseActivity;
 import com.example.eduh_mik.schoolconnect2.fragments.DiaryFragment;
 import com.example.eduh_mik.schoolconnect2.fragments.ExamFragment;
@@ -75,6 +77,7 @@ public class StudentActivity extends BaseActivity implements AppBarLayout.OnOffs
         ListModel listModel = new Gson().fromJson(getIntent().getExtras().getString("list"), ListModel.class);
         mTitle.setText(listModel.getFirst_name()+ " "+listModel.getLast_name());
         tvClass.setText("Class" + " "+ listModel.getClass_id());
+        Glide.with(this).load(AppData.IMAGE_URL+listModel.getImage()).into(mProfileImage);
         loadViewPager(listModel);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +141,7 @@ public class StudentActivity extends BaseActivity implements AppBarLayout.OnOffs
         int id = item.getItemId();
 
         if (id == R.id.nav_account) {
-            startNewActivity(AccountProfileActivity.class);
+            //startNewActivity(AccountProfileActivity.class);
         } else if (id == R.id.nav_about) {
             startNewActivity(AboutUs.class);
         } else if (id == R.id.nav_reports) ;

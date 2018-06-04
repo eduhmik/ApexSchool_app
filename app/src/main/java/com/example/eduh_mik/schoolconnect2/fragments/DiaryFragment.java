@@ -137,7 +137,6 @@ public class DiaryFragment extends BaseFragment implements AdapterView.OnItemSel
         View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_add_diary,null);
         tvContent = (EditText) dialogView.findViewById(R.id.tv_content);
         sendDiary = (ImageButton) dialogView.findViewById(R.id.send_diary);
-        final Spinner simpleSpinnerKids = (Spinner) dialogView.findViewById(R.id.simple_spinner_kids);
         if (sendDiary != null) {
             sendDiary.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -183,18 +182,23 @@ public class DiaryFragment extends BaseFragment implements AdapterView.OnItemSel
             @Override
             public void onResponse(Call<ListResponse<Diary>> call, Response<ListResponse<Diary>> response) {
                 _sweetAlertDialog.dismissWithAnimation();
-                Log.e("fees", gson.toJson(response.body()));
-                Log.e("Status", response.body().getStatus());
-                if (TextUtils.equals(response.body().getStatus(), "success")) {
-                    ArrayList<Diary> response1 = response.body().getList();
-                    diaryList.addAll(response1);
-
-                    Log.e("Fees", gson.toJson(response.body()));
-                    diaryAdapter = new DiaryAdapter(getContext(), diaryList);
-                    recyclerView.setAdapter(diaryAdapter);
-                } else {
-                    showToast("Please try again");
-                    showSweetDialog("Failed!","Failed fetching diary info",SweetAlertDialog.ERROR_TYPE);
+                try {
+                    Log.e("fees", gson.toJson(response.body()));
+                    Log.e("Status", response.body().getStatus());
+                    if (TextUtils.equals(response.body().getStatus(), "success")) {
+                        ArrayList<Diary> response1 = response.body().getList();
+                        diaryList.clear();
+                        diaryList.addAll(response1);
+                        Log.e("Fees", gson.toJson(response.body()));
+                        diaryAdapter = new DiaryAdapter(getContext(), diaryList);
+                        recyclerView.setAdapter(diaryAdapter);
+                    } else {
+                        showToast("Please try again");
+                        showSweetDialog("Failed!", "Failed fetching diary info", SweetAlertDialog.ERROR_TYPE);
+                    }
+                } catch (Exception e){
+                    diaryList.clear();
+                    diaryAdapter.notifyDataSetChanged();
                 }
             }
 

@@ -1,7 +1,5 @@
 package com.example.eduh_mik.schoolconnect2.models;
 
-import android.graphics.drawable.Drawable;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,20 +8,20 @@ import java.util.Date;
  */
 
 public class Gallery {
-    String descr, date;
-    Drawable name;
+    String descr, date, image;
 
-    public Gallery(String descr, Drawable name){
+    public Gallery(String descr, String image, String date){
         this.descr = descr;
-        this.name = name;
+        this.image = image;
+        this.date = date;
     }
 
     public String getDescr() {
         return descr;
     }
 
-    public Drawable getName() {
-        return name;
+    public String getImage() {
+        return image;
     }
     public String getDate() {
         try {

@@ -13,5 +13,5 @@ public interface StudentsRequests {
     Call<ArrayList<ListModel>> getPrepareListData();
 
     @GET("stlist/id/{id}")
-    Call<ArrayList<ListModel>> getFilteredListData(@Path("id") int id);
+    Call<ListResponse<ListModel>> getFilteredListData(@Path("id") int id);
 }

@@ -1,5 +1,8 @@
 package com.example.eduh_mik.schoolconnect2.models;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Homework {
     private String sub_id, descr, date, student_id;
 
@@ -28,11 +31,29 @@ public class Homework {
     }
 
     public String getDate() {
-        return date;
+        try {
+            Date date=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(this.date);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            return simpleDateFormat.format(date);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return "";
+        }
+
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getDay(){
+        try{
+            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(this.date);
+            SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+
+            return sdf.format(date);
+        } catch (Exception e){
+            e.printStackTrace();
+            return "";
+        }
     }
 
     public String getStudent_id() {

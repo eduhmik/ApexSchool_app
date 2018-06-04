@@ -3,11 +3,13 @@ package com.example.eduh_mik.schoolconnect2.activities;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.example.eduh_mik.schoolconnect2.R;
+import com.example.eduh_mik.schoolconnect2.Retrofit.ListResponse;
 import com.example.eduh_mik.schoolconnect2.Retrofit.ServiceGenerator;
 import com.example.eduh_mik.schoolconnect2.Retrofit.StudentsRequests;
 import com.example.eduh_mik.schoolconnect2.adapters.ListAdapter;
@@ -43,19 +45,25 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
         //listAdapter = new ListAdapter(galleryList);
         recyclerView.setLayoutManager(layoutManager);
         Section section = new Gson().fromJson(getIntent().getExtras().getString("section"), Section.class);
+        Log.e("Id", String.valueOf(section.getC_id()));
         filteredData(section.getC_id());
     }
     public void filteredData(int id) {
         StudentsRequests service = ServiceGenerator.createService(StudentsRequests.class);
-        Call<ArrayList<ListModel>> call = service.getFilteredListData(id);
-        call.enqueue(new Callback<ArrayList<ListModel>>() {
+        Call<ListResponse<ListModel>> call = service.getFilteredListData(id);
+        call.enqueue(new Callback<ListResponse<ListModel>>() {
             @Override
-            public void onResponse(Call<ArrayList<ListModel>> call, Response<ArrayList<ListModel>> response) {
+            public void onResponse(Call<ListResponse<ListModel>> call, Response<ListResponse<ListModel>> response) {
+                Log.e("fees", gson.toJson(response.body()));
+                Log.e("Status", response.body().getStatus());
                 try {
-                    galleryList.clear();
-                    galleryList.addAll(response.body());
-                    listAdapter = new ListAdapter(getApplicationContext(), galleryList);
-                    recyclerView.setAdapter(listAdapter);
+                    if (TextUtils.equals(response.body().getStatus(), "success")) {
+                        ArrayList<ListModel> response1 = response.body().getList();
+                        galleryList.clear();
+                        galleryList.addAll(response1);
+                        listAdapter = new ListAdapter(getApplicationContext(), galleryList);
+                        recyclerView.setAdapter(listAdapter);
+                    }
                 }catch(Exception e){
                     galleryList.clear();
                     listAdapter.notifyDataSetChanged();
@@ -65,7 +73,7 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
             }
 
             @Override
-            public void onFailure(Call<ArrayList<ListModel>> call, Throwable t) {
+            public void onFailure(Call<ListResponse<ListModel>> call, Throwable t) {
                 Log.d("Error", t.getMessage());
             }
         });

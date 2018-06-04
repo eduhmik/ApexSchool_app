@@ -1,7 +1,6 @@
 package com.example.eduh_mik.schoolconnect2.adapters.viewholders;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -14,30 +13,32 @@ import butterknife.ButterKnife;
 
 public class ExamVH extends RecyclerView.ViewHolder {
     //public TextView tvName,tvDescription, tvStartDate;
-    @BindView(R.id.exam_year)
-    TextView examYear;
-    @BindView(R.id.exam_type)
-    TextView examType;
-    @BindView(R.id.exam_term)
-    TextView examTerm;
-    @BindView(R.id.maths)
-    TextView maths;
-    @BindView(R.id.english)
-    TextView english;
-    @BindView(R.id.kisw)
-    TextView kisw;
-    @BindView(R.id.scie)
-    TextView scie;
-    @BindView(R.id.sst)
-    TextView sst;
-    @BindView(R.id.comp)
-    TextView comp;
-    @BindView(R.id.total)
-    TextView total;
-    @BindView(R.id.pos)
-    TextView pos;
-    @BindView(R.id.card_exam)
-    CardView cardExam;
+    @BindView(R.id.tv_startDate)
+    TextView tvStartDate;
+    @BindView(R.id.et_day)
+    TextView etDay;
+    @BindView(R.id.tv_Name)
+    TextView tvName;
+    @BindView(R.id.tv_class)
+    TextView tvClass;
+    @BindView(R.id.et_math_mark)
+    TextView etMathMark;
+    @BindView(R.id.et_eng_mark)
+    TextView etEngMark;
+    @BindView(R.id.et_kisw_mark)
+    TextView etKiswMark;
+    @BindView(R.id.et_scie_mark)
+    TextView etScieMark;
+    @BindView(R.id.et_ss_marks)
+    TextView etSsMarks;
+    @BindView(R.id.et_ire_mark)
+    TextView etIreMark;
+    @BindView(R.id.et_creative_mark)
+    TextView etCreativeMark;
+    @BindView(R.id.et_mus_mark)
+    TextView etMusMark;
+    @BindView(R.id.et_comp_mark)
+    TextView etCompMark;
 
     private Context _context;
 
@@ -48,15 +49,15 @@ public class ExamVH extends RecyclerView.ViewHolder {
     }
 
     public void bind(Exam exam) {
-       examTerm.setText(exam.getTerm());
-       examYear.setText(exam.getYear());
-       examType.setText(exam.getType());
-        maths.setText(exam.getMaths());
-        english.setText(exam.getEnglish());
-        kisw.setText(exam.getKisw());
-        sst.setText(exam.getSs());
-        scie.setText(exam.getScie());
-        comp.setText(exam.getComputer());
+       tvName.setText("Term"+ " "+exam.getTerm());
+       tvStartDate.setText(exam.getYear());
+       tvClass.setText(exam.getType());
+        etMathMark.setText(exam.getMaths());
+        etEngMark.setText(exam.getEnglish());
+        etKiswMark.setText(exam.getKisw());
+        etSsMarks.setText(exam.getSs());
+        etScieMark.setText(exam.getScie());
+        etCompMark.setText(exam.getComputer());
 
 
 

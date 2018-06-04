@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.eduh_mik.schoolconnect2.R;
 import com.example.eduh_mik.schoolconnect2.Retrofit.ContactsRequests;
@@ -22,6 +24,7 @@ import com.example.eduh_mik.schoolconnect2.adapters.ContactAdapter;
 import com.example.eduh_mik.schoolconnect2.base.BaseFragment;
 import com.example.eduh_mik.schoolconnect2.interfaces.OnFragmentInteractionListener;
 import com.example.eduh_mik.schoolconnect2.models.Contact;
+import com.example.eduh_mik.schoolconnect2.tools.SweetAlertDialog;
 
 import java.util.ArrayList;
 
@@ -42,6 +45,8 @@ public class ContactFragment extends BaseFragment {
     private OnFragmentInteractionListener mListener;
     private ContactAdapter contactAdapter;
     private ArrayList<Contact> contactList = new ArrayList<>();
+    EditText etRole, etName, etPhone, etPhone2, etEmail;
+    ImageButton imageButton;
 
 
     public ContactFragment() {
@@ -86,6 +91,59 @@ public class ContactFragment extends BaseFragment {
         recyclerView.setAdapter(contactAdapter);
         prepareContactData();
     }
+    public void validate(){
+        String name = etName.getText().toString().trim();
+        String role = etRole.getText().toString().trim();
+        String phone = etPhone.getText().toString().trim();
+        String phone2 = etPhone2.getText().toString().trim();
+        String email = etEmail.getText().toString().trim();
+
+        if(TextUtils.isEmpty(name)){
+            etName.requestFocus();
+            etName.setError("Please enter full name");
+        } else if(TextUtils.isEmpty(role)){
+            etRole.requestFocus();
+            etRole.setError("Please enter role");
+        } else if(TextUtils.isEmpty(phone)){
+            etPhone.requestFocus();
+            etPhone.setError("Please enter role");
+        } else if(TextUtils.isEmpty(email)){
+            etEmail.requestFocus();
+            etEmail.setError("Please enter role");
+        } else {
+            addContact(role, name, phone, phone2, email);
+        }
+    }
+
+    public void addContact(String role, String name, String phone, String phone2, String email){
+        showSweetDialog("Add Contact", "Adding contact. Please wait...", SweetAlertDialog.PROGRESS_TYPE);
+        ContactsRequests service = ServiceGenerator.createService(ContactsRequests.class);
+        Call<ListResponse<Contact>> call = service.addContacts(role, name, phone, phone2, email);
+        call.enqueue(new Callback<ListResponse<Contact>>() {
+            @Override
+            public void onResponse(Call<ListResponse<Contact>> call, Response<ListResponse<Contact>> response) {
+                _sweetAlertDialog.dismissWithAnimation();
+                if (response.body() != null) {
+                    if (TextUtils.equals(response.body().getStatus(), "success")) {
+                        showToast(response.body().getMessage());
+                    } else {
+                        showToast(response.body().getMessage());
+                        showSweetDialog("Failed!", "Sending Contact failed.", SweetAlertDialog.ERROR_TYPE);
+                    }
+                } else {
+                    showToast("No response from server");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListResponse<Contact>> call, Throwable t) {
+                Log.e("Conacts", t.getMessage());
+                _sweetAlertDialog.dismissWithAnimation();
+            }
+        });
+    }
+
+
     private void prepareContactData() {
         ContactsRequests service = ServiceGenerator.createService(ContactsRequests.class);
         Call<ListResponse<Contact>> call = service.getContacts();
@@ -97,6 +155,7 @@ public class ContactFragment extends BaseFragment {
                     Log.e("Status", response.body().getStatus());
                     if (TextUtils.equals(response.body().getStatus(), "success")) {
                         ArrayList<Contact> response1 = response.body().getList();
+                        contactList.clear();
                         contactList.addAll(response1);
                         Log.e("Fees", gson.toJson(response.body()));
                         contactAdapter = new ContactAdapter(getContext(), contactList);
@@ -105,6 +164,8 @@ public class ContactFragment extends BaseFragment {
                         showToast("Please try again");
                     }
                 } catch (Exception e) {
+                    contactList.clear();
+                    contactAdapter.notifyDataSetChanged();
                     e.printStackTrace();
                 }
             }
@@ -120,8 +181,19 @@ public class ContactFragment extends BaseFragment {
     private void showdialog() {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.activity_add_contact, null);
+        final View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_add_contact, null);
+        etEmail = (EditText) dialogView.findViewById(R.id.et_email);
+        etPhone = (EditText) dialogView.findViewById(R.id.et_phonne);
+        etPhone2 = (EditText) dialogView.findViewById(R.id.et_phone2);
+        etRole = (EditText) dialogView.findViewById(R.id.et_role);
+        etName = (EditText) dialogView.findViewById(R.id.et_name);
+        imageButton = (ImageButton) dialogView.findViewById(R.id.btn_submit_contacts);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validate();
+            }
+        });
         dialogBuilder.setView(dialogView);
 
 

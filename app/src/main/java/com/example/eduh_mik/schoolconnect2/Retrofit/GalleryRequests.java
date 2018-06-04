@@ -6,6 +6,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface GalleryRequests {
-    @GET("Gallery")
+    @GET("gallery")
     Call<ListResponse<Gallery>> getGallery();
 }

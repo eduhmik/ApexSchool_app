@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.eduh_mik.schoolconnect2.R;
 import com.example.eduh_mik.schoolconnect2.adapters.MainPagerAdapter;
@@ -133,8 +132,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.activity_schools, null);
-        dialogBuilder.setView(dialogView);
+        //final View dialogView = inflater.inflate(R.layout.activity_schools, null);
+        //dialogBuilder.setView(dialogView);
 
 
         final AlertDialog b = dialogBuilder.create();
