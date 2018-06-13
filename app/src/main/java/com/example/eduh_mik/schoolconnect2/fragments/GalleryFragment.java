@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,6 +45,8 @@ public class GalleryFragment extends BaseFragment {
     private static final int ACTION_REQUEST_CAMERA = 2;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.simpleSwipeRefreshLayout)
+    SwipeRefreshLayout simpleSwipeRefreshLayout;
     //Unbinder unbinder;
     private OnFragmentInteractionListener mListener;
     private GalleryAdapter galleryAdapter;
@@ -68,6 +71,14 @@ public class GalleryFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
+        ButterKnife.bind(this, view);
+        simpleSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                simpleSwipeRefreshLayout.setRefreshing(true);
+                prepareGalleryData();
+            }
+        });
 //        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
 //        myFab.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {
@@ -128,7 +139,7 @@ public class GalleryFragment extends BaseFragment {
 //            }
 //
 //        });
-        ButterKnife.bind(this, view);
+
         return view;
     }
 
@@ -142,21 +153,23 @@ public class GalleryFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         //sectionsAdapter = new SectionsAdapter(sections);
         recyclerView.setLayoutManager(layoutManager);
         prepareGalleryData();
     }
 
     private void prepareGalleryData() {
+        simpleSwipeRefreshLayout.setRefreshing(true);
         GalleryRequests service = ServiceGenerator.createService(GalleryRequests.class);
         Call<ListResponse<Gallery>> call = service.getGallery();
         call.enqueue(new Callback<ListResponse<Gallery>>() {
             @Override
             public void onResponse(Call<ListResponse<Gallery>> call, Response<ListResponse<Gallery>> response) {
+                simpleSwipeRefreshLayout.setRefreshing(false);
                 try {
                     Log.e("fees", gson.toJson(response.body()));
-                    Log.e("Status",response.body().getStatus());
+                    Log.e("Status", response.body().getStatus());
                     if (TextUtils.equals(response.body().getStatus(), "success")) {
                         ArrayList<Gallery> response1 = response.body().getList();
                         galleryList.clear();
@@ -167,7 +180,7 @@ public class GalleryFragment extends BaseFragment {
                     } else {
                         showToast("Please try again");
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     galleryList.clear();
                     galleryAdapter.notifyDataSetChanged();
@@ -176,7 +189,7 @@ public class GalleryFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ListResponse<Gallery>> call, Throwable t) {
-
+                simpleSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }

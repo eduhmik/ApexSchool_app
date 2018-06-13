@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +41,8 @@ import retrofit2.Response;
 public class HomeworkFragment extends BaseFragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.simpleSwipeRefreshLayout)
+    SwipeRefreshLayout simpleSwipeRefreshLayout;
     //Unbinder unbinder;
     private OnFragmentInteractionListener mListener;
     private HomeworkAdapter homeworkAdapter;
@@ -76,11 +78,18 @@ public class HomeworkFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_homework, container, false);
         ButterKnife.bind(this, view);
-        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showdialog();
-                //subjectsData();
+//        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
+//        myFab.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                showdialog();
+//                //subjectsData();
+//            }
+//        });
+        simpleSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                simpleSwipeRefreshLayout.setRefreshing(true);
+                prepareContactData(_listModel.getStudent_id());
             }
         });
         return view;
@@ -181,11 +190,13 @@ public class HomeworkFragment extends BaseFragment {
 //    }
 
     private void prepareContactData(String id) {
+        simpleSwipeRefreshLayout.setRefreshing(true);
         HomeworkRequests service = ServiceGenerator.createService(HomeworkRequests.class);
         Call<ListResponse<Homework>> call = service.getHomework(id);
         call.enqueue(new Callback<ListResponse<Homework>>() {
             @Override
             public void onResponse(Call<ListResponse<Homework>> call, Response<ListResponse<Homework>> response) {
+                simpleSwipeRefreshLayout.setRefreshing(false);
                 Log.e("fees", gson.toJson(response.body()));
                 Log.e("Status", response.body().getStatus());
                 try {
@@ -199,7 +210,7 @@ public class HomeworkFragment extends BaseFragment {
                     } else {
                         showToast("Please try again");
                     }
-                } catch (Exception e){
+                } catch (Exception e) {
                     homeworkList.clear();
                     homeworkAdapter.notifyDataSetChanged();
                 }
@@ -208,6 +219,7 @@ public class HomeworkFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ListResponse<Homework>> call, Throwable t) {
                 Log.e("fees", t.getMessage());
+                simpleSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -216,7 +228,7 @@ public class HomeworkFragment extends BaseFragment {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         final View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.add_homework, null);
-        etContent = (EditText)  dialogView.findViewById(R.id.tv_comment);
+        etContent = (EditText) dialogView.findViewById(R.id.tv_comment);
         imageButton = (ImageButton) dialogView.findViewById(R.id.send_homework);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,11 +245,11 @@ public class HomeworkFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener){
+        if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
-        }else {
+        } else {
             throw new RuntimeException(context.toString()
                     + "must implement OnFragmentInteractionListener");
         }
@@ -249,5 +261,4 @@ public class HomeworkFragment extends BaseFragment {
         super.onDetach();
         mListener = null;
     }
-
 }

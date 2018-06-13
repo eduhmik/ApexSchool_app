@@ -1,12 +1,14 @@
 package com.example.eduh_mik.schoolconnect2.Retrofit;
 
 import com.example.eduh_mik.schoolconnect2.models.Activities;
+import com.example.eduh_mik.schoolconnect2.models.MyActvities;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ActivitiesRequest {
     @FormUrlEncoded
@@ -21,4 +23,7 @@ public interface ActivitiesRequest {
     );
     @GET("activities")
     Call<ListResponse<Activities>> getActivities();
+
+    @GET("paid")
+    Call<ListResponse<MyActvities>> getMyActivities(@Path("id") String id);
 }

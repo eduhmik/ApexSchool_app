@@ -26,6 +26,7 @@
         android:layout_gravity="bottom"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:visibility="gone"
         android:background="@drawable/bg_white_text_border">
         <ImageView
             android:layout_width="50dp"

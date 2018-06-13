@@ -27,7 +27,7 @@ public class AboutUs extends AppCompatActivity {
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
 
-                .setImage(R.mipmap.ic_launcher)
+                .setImage(R.drawable.apexlogo)
                 .addItem(new Element().setTitle("Version 6.2"))
                 .addGroup("Connect with us")
                 .addEmail("email@gmail.com")

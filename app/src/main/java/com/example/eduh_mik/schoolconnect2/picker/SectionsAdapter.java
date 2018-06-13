@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.example.eduh_mik.schoolconnect2.R;
 import com.example.eduh_mik.schoolconnect2.activities.ListActivity;
 import com.example.eduh_mik.schoolconnect2.models.Section;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -60,7 +59,7 @@ public class SectionsAdapter extends RecyclerView.Adapter<SectionsAdapter.Sectio
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(itemView.getContext(), ListActivity.class);
-                    intent.putExtra("section",new Gson().toJson(sections.get(getAdapterPosition())));
+                    //intent.putExtra("section",new Gson().toJson(sections.get(getAdapterPosition())));
                     itemView.getContext().startActivity(intent);
                 }
             });

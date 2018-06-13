@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,8 @@ import retrofit2.Response;
 public class ExamFragment extends BaseFragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.simpleSwipeRefreshLayout)
+    SwipeRefreshLayout simpleSwipeRefreshLayout;
     //Unbinder unbinder;
     private OnFragmentInteractionListener mListener;
     private ExamAdapter examAdapter;
@@ -72,6 +75,13 @@ public class ExamFragment extends BaseFragment {
 //                showdialog();
 //            }
 //        });
+        simpleSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                simpleSwipeRefreshLayout.setRefreshing(true);
+                prepareContactData(_listModel.getStudent_id());
+            }
+        });
         return view;
     }
 
@@ -80,21 +90,25 @@ public class ExamFragment extends BaseFragment {
         super.onResume();
         prepareContactData(_listModel.getStudent_id());
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         //sectionsAdapter = new SectionsAdapter(sections);
         recyclerView.setLayoutManager(layoutManager);
     }
+
     private void prepareContactData(String id) {
+        simpleSwipeRefreshLayout.setRefreshing(true);
         ExamsRequest service = ServiceGenerator.createService(ExamsRequest.class);
         Call<ListResponse<Exam>> call = service.getExams(id);
         call.enqueue(new Callback<ListResponse<Exam>>() {
             @Override
             public void onResponse(Call<ListResponse<Exam>> call, Response<ListResponse<Exam>> response) {
                 Log.e("fees", gson.toJson(response.body()));
-                Log.e("Status",response.body().getStatus());
+                Log.e("Status", response.body().getStatus());
+                simpleSwipeRefreshLayout.setRefreshing(false);
                 try {
                     if (TextUtils.equals(response.body().getStatus(), "success")) {
                         ArrayList<Exam> response1 = response.body().getList();
@@ -106,7 +120,7 @@ public class ExamFragment extends BaseFragment {
                     } else {
                         showToast("Please try again");
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     examList.clear();
                     examAdapter.notifyDataSetChanged();
@@ -116,9 +130,11 @@ public class ExamFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ListResponse<Exam>> call, Throwable t) {
                 Log.e("fees", t.getMessage());
+                simpleSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
+
     private void showdialog() {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
@@ -131,15 +147,14 @@ public class ExamFragment extends BaseFragment {
         b.show();
 
 
-
     }
 
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener){
+        if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
-        }else {
+        } else {
             throw new RuntimeException(context.toString()
                     + "must implement OnFragmentInteractionListener");
         }
@@ -151,5 +166,4 @@ public class ExamFragment extends BaseFragment {
         super.onDetach();
         mListener = null;
     }
-
 }

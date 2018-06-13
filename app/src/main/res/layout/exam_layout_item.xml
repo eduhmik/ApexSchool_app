@@ -200,7 +200,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Do 30 sums in  mathematics and submit it to ny emmail very early in the morning"
+                    android:text="80"
+                    android:gravity="center"
                     android:maxLines="4"
                     android:id="@+id/et_math_mark"
                     android:layout_weight="0.3"
@@ -230,7 +231,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="75"
+                    android:gravity="center"
                     android:id="@+id/et_eng_mark"
                     android:layout_weight="0.3"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
@@ -260,6 +262,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:gravity="center"
                     android:id="@+id/et_kisw_mark"
                     android:layout_weight="0.3"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
@@ -289,6 +292,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=" "
+                    android:gravity="center"
                     android:id="@+id/et_scie_mark"
                     android:layout_weight="0.3"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
@@ -317,7 +321,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Geographicsl marks prominent in Kenya"
+                    android:text=""
+                    android:gravity="center"
                     android:id="@+id/et_ss_marks"
                     android:layout_weight="0.3"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
@@ -347,6 +352,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:gravity="center"
                     android:id="@+id/et_ire_mark"
                     android:layout_weight="0.3"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
@@ -376,6 +382,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:gravity="center"
                     android:id="@+id/et_creative_mark"
                     android:layout_weight="0.3"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
@@ -405,6 +412,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:gravity="center"
                     android:id="@+id/et_mus_mark"
                     android:layout_weight="0.3"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
@@ -434,10 +442,71 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:gravity="center"
                     android:id="@+id/et_comp_mark"
                     android:layout_weight="0.3"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
                 </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#ebebeb"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etTtlMarks"
+                    android:layout_weight="0.7"
+                    android:text="Total Marks"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:gravity="center"
+                    android:id="@+id/tv_total"
+                    android:layout_weight="0.3"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#ebebeb"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etPosition"
+                    android:layout_weight="0.7"
+                    android:text="Position"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:gravity="center"
+                    android:id="@+id/tv_position"
+                    android:layout_weight="0.3"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 </android.support.v7.widget.CardView>

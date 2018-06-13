@@ -27,27 +27,30 @@
         <TextView
             android:id="@+id/TextView_date"
             android:text="Year"
+            android:textStyle="bold"
             android:layout_weight="1"
             android:background="#dcdcdc"
-            android:textColor="#000000"
+            android:textColor="@color/colorAccent"
             android:padding="20dip"
             android:gravity="center"/>
 
         <TextView
             android:id="@+id/TextView_miles"
             android:text="Fees"
+            android:textStyle="bold"
             android:layout_weight="1"
             android:background="#d3d3d3"
-            android:textColor="#000000"
+            android:textColor="@color/colorAccent"
             android:padding="20dip"
             android:gravity="center"/>
 
         <TextView
             android:id="@+id/TextView_calories"
             android:text="Term"
+            android:textStyle="bold"
             android:layout_weight="1"
             android:background="#cac9c9"
-            android:textColor="#000000"
+            android:textColor="@color/colorAccent"
             android:padding="20dip"
             android:gravity="center"/>
 
@@ -96,9 +99,10 @@
             <TextView
                 android:id="@+id/TextView_bal_fees"
                 android:text="Term Fees"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:background="#dcdcdc"
-                android:textColor="#000000"
+                android:textColor="@color/colorPrimary"
                 android:padding="20dip"
                 android:gravity="center"/>
 
@@ -129,9 +133,10 @@
             <TextView
                 android:id="@+id/TextView_paid"
                 android:text="Amount Paid"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:background="#dcdcdc"
-                android:textColor="#000000"
+                android:textColor="@color/colorPrimary"
                 android:padding="20dip"
                 android:gravity="center"/>
 
@@ -162,9 +167,10 @@
             <TextView
                 android:id="@+id/TextView_bal"
                 android:text="Amount Balance"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:background="#dcdcdc"
-                android:textColor="#000000"
+                android:textColor="@color/colorPrimary"
                 android:padding="20dip"
                 android:gravity="center"/>
 

@@ -1,0 +1,403 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.RegisterFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/header_cover_image"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:background="@color/colorPrimary"
+                android:tint="@color/colorPrimary">
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:text="Register"
+                    android:textColor="#fff"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvUsername"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="20dp"
+                    android:text="Enter registration details."
+                    android:textColor="#fff"/>
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/header_cover_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-30dp"
+                android:background="@drawable/bg_accent_circle"
+                android:elevation="5dp"
+                android:padding="10dp"
+                android:tint="@android:color/darker_gray"
+                android:src="@drawable/ic_person_black_24dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="50dp"
+                android:layout_below="@+id/header_cover_image">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="First Name"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/bg_edit_text_gray"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:padding="5dp"
+                            android:tint="@color/colorPrimary"
+                            app:srcCompat="@drawable/ic_person_black_24dp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorWhiteDark" />
+
+                        <EditText
+                            android:id="@+id/etfirstName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@android:color/transparent"
+                            android:ellipsize="end"
+                            android:hint="e.g John"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:padding="5dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Last name"
+                        android:padding="5dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/bg_edit_text_gray"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:padding="5dp"
+                            android:tint="@color/colorPrimary"
+                            app:srcCompat="@drawable/ic_person_black_24dp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorWhiteDark" />
+                        <EditText
+                            android:id="@+id/etLastName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="e.g Doe"
+                            android:inputType="text"
+                            android:layout_gravity="center_vertical"
+                            android:padding="5dp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:background="@android:color/transparent"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:padding="5dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/bg_edit_text_gray"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:padding="10dp"
+                            android:tint="@color/colorPrimary"
+                            app:srcCompat="@drawable/about_icon_email" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorWhiteDark" />
+                        <EditText
+                            android:id="@+id/etEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="e.g johndoe@gmail.com"
+                            android:inputType="textEmailAddress"
+                            android:layout_gravity="center_vertical"
+                            android:padding="5dp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:background="@android:color/transparent"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mobile number"
+                        android:padding="5dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/bg_edit_text_gray"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:padding="5dp"
+                            android:tint="@color/colorPrimary"
+                            app:srcCompat="@drawable/ic_phone_black_24dp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorWhiteDark" />
+                        <EditText
+                            android:id="@+id/etPhone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="e.g 0700000000"
+                            android:digits="0123456789"
+                            android:inputType="phone"
+                            android:layout_gravity="center_vertical"
+                            android:padding="5dp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:background="@android:color/transparent"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Password"
+                        android:padding="5dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/bg_edit_text_gray"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:padding="5dp"
+                            android:tint="@color/colorPrimary"
+                            app:srcCompat="@drawable/ic_lock_outline_black_24dp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorWhiteDark" />
+                        <EditText
+                            android:id="@+id/etPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="password"
+                            android:inputType="textPassword"
+                            android:layout_gravity="center_vertical"
+                            android:padding="5dp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:background="@android:color/transparent"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Repeat Password"
+                        android:padding="5dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/bg_edit_text_gray"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:padding="5dp"
+                            android:tint="@color/colorPrimary"
+                            app:srcCompat="@drawable/ic_lock_outline_black_24dp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorWhiteDark" />
+                        <EditText
+                            android:id="@+id/etRepeatPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="password"
+                            android:inputType="textPassword"
+                            android:layout_gravity="center_vertical"
+                            android:padding="5dp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:background="@android:color/transparent"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/lin_Google"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_gravity="bottom"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:visibility="gone"
+                    android:background="@drawable/bg_white_text_border">
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="7dp"
+                        android:layout_margin="2dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/png_google"
+                        android:scaleType="centerCrop"/>
+                    <TextView
+                        android:text="Sign In With Google "
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                </LinearLayout>
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_Submit"
+                    android:text="Register"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingBottom="5dp"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/colorPrimary"
+                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</FrameLayout>

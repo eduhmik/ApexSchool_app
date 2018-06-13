@@ -6,7 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,13 +53,14 @@ public class ActivitiesFragment extends BaseFragment {
     public boolean pickDateSet, pickTimeSet;
     TextView tvPickDate, tvPickTime;
     LinearLayout linEndDate, linEndTime;
+    @BindView(R.id.simpleSwipeRefreshLayout)
+    SwipeRefreshLayout simpleSwipeRefreshLayout;
     private OnFragmentInteractionListener mListener;
     private ActivitiesAdapter activitiesAdapter;
     private ArrayList<Activities> activitiesList = new ArrayList<>();
 
     EditText etActivity1, etActivity2, etActivity3, etActivity4;
     ImageButton btnActivities;
-
 
 
     public ActivitiesFragment() {
@@ -81,16 +82,24 @@ public class ActivitiesFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_activities, container, false);
         ButterKnife.bind(this, view);
-        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                showdialog();
+        simpleSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                simpleSwipeRefreshLayout.setRefreshing(true);
+                prepareActivitiesData();
             }
         });
+//        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
+//        myFab.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//                showdialog();
+//            }
+//        });
         return view;
     }
-    public void validate(){
+
+    public void validate() {
         String act1 = etActivity1.getText().toString().trim();
         String act2 = etActivity2.getText().toString().trim();
         String act3 = etActivity3.getText().toString().trim();
@@ -98,7 +107,7 @@ public class ActivitiesFragment extends BaseFragment {
         String date = tvPickDate.getText().toString().trim();
         String time = tvPickTime.getText().toString().trim();
 
-        if(TextUtils.isEmpty(act1)){
+        if (TextUtils.isEmpty(act1)) {
             etActivity1.requestFocus();
             etActivity1.setError("Please enter an activity");
         } else if (!pickDateSet) {
@@ -113,7 +122,7 @@ public class ActivitiesFragment extends BaseFragment {
 
     }
 
-    public void addActivity(String act1, String act2, String act3, String act4, String date, String time){
+    public void addActivity(String act1, String act2, String act3, String act4, String date, String time) {
         showSweetDialog("Add Activity", "Adding Activity. Please wait...", SweetAlertDialog.PROGRESS_TYPE);
         ActivitiesRequest service = ServiceGenerator.createService(ActivitiesRequest.class);
         Call<ListResponse<Activities>> call = service.addActivies(act1, act2, act3, act4, date, time);
@@ -141,6 +150,7 @@ public class ActivitiesFragment extends BaseFragment {
             }
         });
     }
+
     private void showdialog() {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
@@ -181,7 +191,6 @@ public class ActivitiesFragment extends BaseFragment {
         b.show();
 
 
-
     }
 
     @Override
@@ -189,14 +198,16 @@ public class ActivitiesFragment extends BaseFragment {
         super.onResume();
         prepareActivitiesData();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         //sectionsAdapter = new SectionsAdapter(sections);
         recyclerView.setLayoutManager(layoutManager);
         prepareActivitiesData();
     }
+
     private void pickDate(int i) {
         if (i == 1) {
             int mYear, mMonth, mDay;
@@ -243,12 +254,15 @@ public class ActivitiesFragment extends BaseFragment {
             timePickerDialog.show();
         }
     }
+
     private void prepareActivitiesData() {
-        ActivitiesRequest service= ServiceGenerator.createService(ActivitiesRequest.class);
+        simpleSwipeRefreshLayout.setRefreshing(true);
+        ActivitiesRequest service = ServiceGenerator.createService(ActivitiesRequest.class);
         Call<ListResponse<Activities>> call = service.getActivities();
         call.enqueue(new Callback<ListResponse<Activities>>() {
             @Override
             public void onResponse(Call<ListResponse<Activities>> call, Response<ListResponse<Activities>> response) {
+                simpleSwipeRefreshLayout.setRefreshing(false);
                 try {
                     Log.e("fees", gson.toJson(response.body()));
                     Log.e("Status", response.body().getStatus());
@@ -273,17 +287,17 @@ public class ActivitiesFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ListResponse<Activities>> call, Throwable t) {
                 Log.e("", t.getMessage());
-
+                simpleSwipeRefreshLayout.setRefreshing(false);
             }
         });
-}
+    }
 
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener){
+        if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
-        }else {
+        } else {
             throw new RuntimeException(context.toString()
                     + "must implement OnFragmentInteractionListener");
         }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +41,8 @@ import retrofit2.Response;
 public class ContactFragment extends BaseFragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.simpleSwipeRefreshLayout)
+    SwipeRefreshLayout simpleSwipeRefreshLayout;
     //Unbinder unbinder;
     private OnFragmentInteractionListener mListener;
     private ContactAdapter contactAdapter;
@@ -68,11 +70,18 @@ public class ContactFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
         ButterKnife.bind(this, view);
-        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                showdialog();
+//        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
+//        myFab.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//                showdialog();
+//            }
+//        });
+        simpleSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                simpleSwipeRefreshLayout.setRefreshing(true);
+                prepareContactData();
             }
         });
         return view;
@@ -83,6 +92,7 @@ public class ContactFragment extends BaseFragment {
         super.onResume();
         prepareContactData();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -91,23 +101,24 @@ public class ContactFragment extends BaseFragment {
         recyclerView.setAdapter(contactAdapter);
         prepareContactData();
     }
-    public void validate(){
+
+    public void validate() {
         String name = etName.getText().toString().trim();
         String role = etRole.getText().toString().trim();
         String phone = etPhone.getText().toString().trim();
         String phone2 = etPhone2.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
 
-        if(TextUtils.isEmpty(name)){
+        if (TextUtils.isEmpty(name)) {
             etName.requestFocus();
             etName.setError("Please enter full name");
-        } else if(TextUtils.isEmpty(role)){
+        } else if (TextUtils.isEmpty(role)) {
             etRole.requestFocus();
             etRole.setError("Please enter role");
-        } else if(TextUtils.isEmpty(phone)){
+        } else if (TextUtils.isEmpty(phone)) {
             etPhone.requestFocus();
             etPhone.setError("Please enter role");
-        } else if(TextUtils.isEmpty(email)){
+        } else if (TextUtils.isEmpty(email)) {
             etEmail.requestFocus();
             etEmail.setError("Please enter role");
         } else {
@@ -115,7 +126,7 @@ public class ContactFragment extends BaseFragment {
         }
     }
 
-    public void addContact(String role, String name, String phone, String phone2, String email){
+    public void addContact(String role, String name, String phone, String phone2, String email) {
         showSweetDialog("Add Contact", "Adding contact. Please wait...", SweetAlertDialog.PROGRESS_TYPE);
         ContactsRequests service = ServiceGenerator.createService(ContactsRequests.class);
         Call<ListResponse<Contact>> call = service.addContacts(role, name, phone, phone2, email);
@@ -145,11 +156,13 @@ public class ContactFragment extends BaseFragment {
 
 
     private void prepareContactData() {
+        simpleSwipeRefreshLayout.setRefreshing(true);
         ContactsRequests service = ServiceGenerator.createService(ContactsRequests.class);
         Call<ListResponse<Contact>> call = service.getContacts();
         call.enqueue(new Callback<ListResponse<Contact>>() {
             @Override
             public void onResponse(Call<ListResponse<Contact>> call, Response<ListResponse<Contact>> response) {
+                simpleSwipeRefreshLayout.setRefreshing(false);
                 try {
                     Log.e("fees", gson.toJson(response.body()));
                     Log.e("Status", response.body().getStatus());
@@ -173,11 +186,13 @@ public class ContactFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ListResponse<Contact>> call, Throwable t) {
                 Log.e("Failure", t.getMessage());
+                simpleSwipeRefreshLayout.setRefreshing(false);
 
             }
 
         });
     }
+
     private void showdialog() {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
@@ -201,15 +216,14 @@ public class ContactFragment extends BaseFragment {
         b.show();
 
 
-
     }
 
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener){
+        if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
-        }else {
+        } else {
             throw new RuntimeException(context.toString()
                     + "must implement OnFragmentInteractionListener");
         }
@@ -221,5 +235,4 @@ public class ContactFragment extends BaseFragment {
         super.onDetach();
         mListener = null;
     }
-
 }

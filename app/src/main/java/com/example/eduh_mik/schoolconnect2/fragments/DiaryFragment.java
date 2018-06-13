@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,11 +46,13 @@ public class DiaryFragment extends BaseFragment implements AdapterView.OnItemSel
     int position;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-//    @BindView(R.id.simple_spinner_kids)
+    //    @BindView(R.id.simple_spinner_kids)
     Spinner simpleSpinnerKids;
 
     EditText tvContent;
     ImageButton sendDiary;
+    @BindView(R.id.simpleSwipeRefreshLayout)
+    SwipeRefreshLayout simpleSwipeRefreshLayout;
     //Unbinder unbinder;
     private OnFragmentInteractionListener mListener;
     private DiaryAdapter diaryAdapter;
@@ -61,17 +63,19 @@ public class DiaryFragment extends BaseFragment implements AdapterView.OnItemSel
     public DiaryFragment() {
         // Required empty public constructor
     }
-    public void validate(){
+
+    public void validate() {
         String descr = tvContent.getText().toString().trim();
-        if(TextUtils.isEmpty(descr))  {
+        if (TextUtils.isEmpty(descr)) {
             tvContent.requestFocus();
             tvContent.setError("You haven't entered any comments");
-        }else {
+        } else {
             addDiary(descr, _listModel.getStudent_id());
         }
 
     }
-    public void addDiary(String descr, String student_id){
+
+    public void addDiary(String descr, String student_id) {
         showSweetDialog("Add Diary", "Sending Diary. Please wait...", SweetAlertDialog.PROGRESS_TYPE);
         DiaryRequests service = ServiceGenerator.createService(DiaryRequests.class);
         Call<ListResponse<Diary>> call = service.newDiary(descr, student_id);
@@ -79,15 +83,15 @@ public class DiaryFragment extends BaseFragment implements AdapterView.OnItemSel
             @Override
             public void onResponse(Call<ListResponse<Diary>> call, Response<ListResponse<Diary>> response) {
                 _sweetAlertDialog.dismissWithAnimation();
-                if(response.body() !=  null){
+                if (response.body() != null) {
                     String id = diaryList.get(position).getStudent_id();
-                    if(TextUtils.equals(response.body().getStatus(), "success")){
+                    if (TextUtils.equals(response.body().getStatus(), "success")) {
                         showToast(response.body().getMessage());
-                    }else {
+                    } else {
                         showToast(response.body().getMessage());
                         showSweetDialog("Failed!", "Sending Diary failed.", SweetAlertDialog.ERROR_TYPE);
                     }
-                }else {
+                } else {
                     showToast("No response from server");
                 }
 
@@ -121,10 +125,17 @@ public class DiaryFragment extends BaseFragment implements AdapterView.OnItemSel
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_diary, container, false);
         ButterKnife.bind(this, view);
-        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showdialog();
+//        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
+//        myFab.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                showdialog();
+//            }
+//        });
+        simpleSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                simpleSwipeRefreshLayout.setRefreshing(false);
+                prepareDiaryData(_listModel.getStudent_id());
             }
         });
         return view;
@@ -134,7 +145,7 @@ public class DiaryFragment extends BaseFragment implements AdapterView.OnItemSel
     private void showdialog() {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-        View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_add_diary,null);
+        View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_add_diary, null);
         tvContent = (EditText) dialogView.findViewById(R.id.tv_content);
         sendDiary = (ImageButton) dialogView.findViewById(R.id.send_diary);
         if (sendDiary != null) {
@@ -149,6 +160,7 @@ public class DiaryFragment extends BaseFragment implements AdapterView.OnItemSel
         dialogBuilder.show();
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -175,7 +187,7 @@ public class DiaryFragment extends BaseFragment implements AdapterView.OnItemSel
     }
 
     private void prepareDiaryData(String id) {
-        showSweetDialog("Fetching Diary","Please Wait. Fetching Diary info...", SweetAlertDialog.PROGRESS_TYPE);
+        showSweetDialog("Fetching Diary", "Please Wait. Fetching Diary info...", SweetAlertDialog.PROGRESS_TYPE);
         DiaryRequests service = ServiceGenerator.createService(DiaryRequests.class);
         Call<ListResponse<Diary>> call = service.getDiary(id);
         call.enqueue(new Callback<ListResponse<Diary>>() {
@@ -196,7 +208,7 @@ public class DiaryFragment extends BaseFragment implements AdapterView.OnItemSel
                         showToast("Please try again");
                         showSweetDialog("Failed!", "Failed fetching diary info", SweetAlertDialog.ERROR_TYPE);
                     }
-                } catch (Exception e){
+                } catch (Exception e) {
                     diaryList.clear();
                     diaryAdapter.notifyDataSetChanged();
                 }
@@ -228,9 +240,4 @@ public class DiaryFragment extends BaseFragment implements AdapterView.OnItemSel
         super.onDetach();
         mListener = null;
     }
-
-//    @OnClick(R.id.send_diary)
-//    public void onViewClicked() {
-//        validate();
-//    }
 }

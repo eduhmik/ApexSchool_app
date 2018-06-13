@@ -7,7 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +27,7 @@ import com.example.eduh_mik.schoolconnect2.R;
 import com.example.eduh_mik.schoolconnect2.Retrofit.ListResponse;
 import com.example.eduh_mik.schoolconnect2.Retrofit.NoticesRequests;
 import com.example.eduh_mik.schoolconnect2.Retrofit.ServiceGenerator;
+import com.example.eduh_mik.schoolconnect2.activities.MainActivity;
 import com.example.eduh_mik.schoolconnect2.adapters.NoticesAdapter;
 import com.example.eduh_mik.schoolconnect2.base.BaseFragment;
 import com.example.eduh_mik.schoolconnect2.interfaces.OnFragmentInteractionListener;
@@ -46,12 +47,14 @@ import retrofit2.Response;
  * Created by Eduh_mik on 4/21/2018.
  */
 
-public class NoticesFragment extends BaseFragment {
+public class NoticesFragment extends BaseFragment implements MainActivity.OnMedicineSearchListener {
     public Calendar calendarDate, calendarTime;
     public boolean pickDateSet, pickTimeSet;
     public int interval = 1;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.simpleSwipeRefreshLayout)
+    SwipeRefreshLayout simpleSwipeRefreshLayout;
     //Unbinder unbinder;
     private OnFragmentInteractionListener mListener;
     ProgressDialog progressDialog;
@@ -82,13 +85,21 @@ public class NoticesFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notice, container, false);
         ButterKnife.bind(this, view);
-        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                showdialog();
+//        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.fab);
+//        myFab.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//                showdialog();
+//            }
+//        });
+        simpleSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                simpleSwipeRefreshLayout.setRefreshing(true);
+                prepareNoticesData();
             }
         });
+
         return view;
     }
 
@@ -245,44 +256,46 @@ public class NoticesFragment extends BaseFragment {
     }
 
     private void prepareNoticesData() {
-       progressDialog = new ProgressDialog(getActivity());
-       progressDialog.setTitle("Fetching Notices");
-       progressDialog.setMessage("Fetching Notices. Please wait...");
-       progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-       progressDialog.show();
+//        progressDialog = new ProgressDialog(getActivity());
+//        progressDialog.setTitle("Fetching Notices");
+//        progressDialog.setMessage("Fetching Notices. Please wait...");
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressDialog.show();
+        simpleSwipeRefreshLayout.setRefreshing(true);
         NoticesRequests service = ServiceGenerator.createService(NoticesRequests.class);
         Call<ListResponse<Notices>> call = service.getNotices();
         call.enqueue(new Callback<ListResponse<Notices>>() {
             @Override
             public void onResponse(Call<ListResponse<Notices>> call, Response<ListResponse<Notices>> response) {
-                    progressDialog.dismiss();
-                    Log.e("fees", gson.toJson(response.body()));
-                    Log.e("Status", response.body().getStatus());
-                    try {
-                        if (TextUtils.equals(response.body().getStatus(), "success")) {
-                            ArrayList<Notices> response1 = response.body().getList();
-                            noticesList.clear();
-                            noticesList.addAll(response1);
-                            Log.e("Fees", gson.toJson(response.body()));
-                            noticesAdapter = new NoticesAdapter(getContext(), noticesList);
-                            recyclerView.setAdapter(noticesAdapter);
-                        }
-                            else {
-                                showToast("Please try again");
-                                showSweetDialog("Failed!", "Failed to fetch Notices!", SweetAlertDialog.ERROR_TYPE);
-                            }
-
-                    }catch (Exception e){
+                //progressDialog.dismiss();
+                simpleSwipeRefreshLayout.setRefreshing(false);
+                Log.e("fees", gson.toJson(response.body()));
+                Log.e("Status", response.body().getStatus());
+                try {
+                    if (TextUtils.equals(response.body().getStatus(), "success")) {
+                        ArrayList<Notices> response1 = response.body().getList();
                         noticesList.clear();
-                        noticesAdapter.notifyDataSetChanged();
-                        e.printStackTrace();
+                        noticesList.addAll(response1);
+                        Log.e("Fees", gson.toJson(response.body()));
+                        noticesAdapter = new NoticesAdapter(getContext(), noticesList);
+                        recyclerView.setAdapter(noticesAdapter);
+                    } else {
+                        showToast("Please try again");
+                        showSweetDialog("Failed!", "Failed to fetch Notices!", SweetAlertDialog.ERROR_TYPE);
                     }
+
+                } catch (Exception e) {
+                    noticesList.clear();
+                    noticesAdapter.notifyDataSetChanged();
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onFailure(Call<ListResponse<Notices>> call, Throwable t) {
                 Log.e("Notices", t.getMessage());
-                progressDialog.dismiss();
+               // progressDialog.dismiss();
+                simpleSwipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -291,8 +304,8 @@ public class NoticesFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof MainActivity) {
+            ((MainActivity)getActivity()).initOnMedicineSearchListener(this);
         } else {
             throw new RuntimeException(context.toString()
                     + "must implement OnFragmentInteractionListener");
@@ -307,7 +320,7 @@ public class NoticesFragment extends BaseFragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onMedicineSearched(String name) {
+        noticesAdapter.getFilter().filter(name);
     }
 }

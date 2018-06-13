@@ -5,7 +5,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".application.AppController"
@@ -35,8 +35,22 @@
         <activity
             android:name=".activities.StudentActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.ListActivity"></activity>
-        <activity android:name=".activities.EditProfileActivity"/>
+        <activity android:name=".activities.ListActivity" />
+        <activity android:name=".activities.EditProfileActivity" />
+
+        <!-- Firebase Notifications -->
+        <service android:name=".service.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".service.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- ./Firebase Notifications -->
+        <activity android:name=".activities.FeedbackActivity"></activity>
     </application>
 
 </manifest>

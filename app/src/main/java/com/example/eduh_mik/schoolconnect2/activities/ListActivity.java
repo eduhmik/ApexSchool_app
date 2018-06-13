@@ -1,6 +1,7 @@
 package com.example.eduh_mik.schoolconnect2.activities;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,8 +16,6 @@ import com.example.eduh_mik.schoolconnect2.Retrofit.StudentsRequests;
 import com.example.eduh_mik.schoolconnect2.adapters.ListAdapter;
 import com.example.eduh_mik.schoolconnect2.base.BaseActivity;
 import com.example.eduh_mik.schoolconnect2.models.ListModel;
-import com.example.eduh_mik.schoolconnect2.models.Section;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -30,10 +29,11 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.simpleSwipeRefreshLayout)
+    SwipeRefreshLayout simpleSwipeRefreshLayout;
 
     private ListAdapter listAdapter;
     private ArrayList<ListModel> galleryList = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +41,25 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
         setContentView(R.layout.activity_list);
         ButterKnife.bind(this);
 
-        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         //listAdapter = new ListAdapter(galleryList);
         recyclerView.setLayoutManager(layoutManager);
-        Section section = new Gson().fromJson(getIntent().getExtras().getString("section"), Section.class);
-        Log.e("Id", String.valueOf(section.getC_id()));
-        filteredData(section.getC_id());
+        //Section section = new Gson().fromJson(getIntent().getExtras().getString("section"), Section.class);
+        simpleSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                simpleSwipeRefreshLayout.setRefreshing(false);
+                filteredData(sharedPrefs.getUser().getPhone());
+            }
+        });
+        Log.e("Phone", String.valueOf(sharedPrefs.getUser().getPhone()));
+        filteredData(sharedPrefs.getUser().getPhone());
     }
-    public void filteredData(int id) {
+
+    public void filteredData(String phone) {
+        simpleSwipeRefreshLayout.setRefreshing(true);
         StudentsRequests service = ServiceGenerator.createService(StudentsRequests.class);
-        Call<ListResponse<ListModel>> call = service.getFilteredListData(id);
+        Call<ListResponse<ListModel>> call = service.getFilteredListData(phone);
         call.enqueue(new Callback<ListResponse<ListModel>>() {
             @Override
             public void onResponse(Call<ListResponse<ListModel>> call, Response<ListResponse<ListModel>> response) {
@@ -58,26 +67,29 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
                 Log.e("Status", response.body().getStatus());
                 try {
                     if (TextUtils.equals(response.body().getStatus(), "success")) {
+                        simpleSwipeRefreshLayout.setRefreshing(false);
                         ArrayList<ListModel> response1 = response.body().getList();
                         galleryList.clear();
                         galleryList.addAll(response1);
                         listAdapter = new ListAdapter(getApplicationContext(), galleryList);
                         recyclerView.setAdapter(listAdapter);
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
                     galleryList.clear();
                     listAdapter.notifyDataSetChanged();
                     e.printStackTrace();
                 }
-                Log.e("Size",String.valueOf(galleryList.size()));
+                Log.e("Size", String.valueOf(galleryList.size()));
             }
 
             @Override
             public void onFailure(Call<ListResponse<ListModel>> call, Throwable t) {
+                simpleSwipeRefreshLayout.setRefreshing(false);
                 Log.d("Error", t.getMessage());
             }
         });
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         startNewActivity(StudentActivity.class);

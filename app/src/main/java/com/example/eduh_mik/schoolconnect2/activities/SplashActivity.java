@@ -3,7 +3,6 @@ package com.example.eduh_mik.schoolconnect2.activities;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.eduh_mik.schoolconnect2.R;
@@ -30,7 +29,7 @@ public class SplashActivity extends BaseActivity {
         ButterKnife.bind(this);
         assert getSupportActionBar() != null;
         getSupportActionBar().hide();
-        linGoogle.setVisibility(sharedPrefs.getIsloggedIn() ? View.GONE : View.VISIBLE);
+        //linGoogle.setVisibility(sharedPrefs.getIsloggedIn() ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -40,10 +39,8 @@ public class SplashActivity extends BaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (sharedPrefs.getIsloggedIn()) {
-                    startNewActivity(MainActivity.class);
-                    SplashActivity.this.finish();
-                }
+                startNewActivity(sharedPrefs.getIsloggedIn() ? MainActivity.class : RegisterActivity.class);
+                SplashActivity.this.finish();
             }
         }, 3000);
     }

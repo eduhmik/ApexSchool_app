@@ -12,6 +12,6 @@ public interface StudentsRequests {
     @GET("students")
     Call<ArrayList<ListModel>> getPrepareListData();
 
-    @GET("stlist/id/{id}")
-    Call<ListResponse<ListModel>> getFilteredListData(@Path("id") int id);
+    @GET("stlist/id/{phone}")
+    Call<ListResponse<ListModel>> getFilteredListData(@Path("phone") String phone);
 }

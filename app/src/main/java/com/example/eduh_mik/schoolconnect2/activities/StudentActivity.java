@@ -1,6 +1,5 @@
 package com.example.eduh_mik.schoolconnect2.activities;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -28,6 +27,7 @@ import com.example.eduh_mik.schoolconnect2.fragments.DiaryFragment;
 import com.example.eduh_mik.schoolconnect2.fragments.ExamFragment;
 import com.example.eduh_mik.schoolconnect2.fragments.FeesFragment;
 import com.example.eduh_mik.schoolconnect2.fragments.HomeworkFragment;
+import com.example.eduh_mik.schoolconnect2.fragments.MyGalleryFragment;
 import com.example.eduh_mik.schoolconnect2.interfaces.OnFragmentInteractionListener;
 import com.example.eduh_mik.schoolconnect2.models.ListModel;
 import com.google.gson.Gson;
@@ -75,9 +75,9 @@ public class StudentActivity extends BaseActivity implements AppBarLayout.OnOffs
         setSupportActionBar(toolbar);
         setTitle("Reports");
         ListModel listModel = new Gson().fromJson(getIntent().getExtras().getString("list"), ListModel.class);
-        mTitle.setText(listModel.getFirst_name()+ " "+listModel.getLast_name());
-        tvClass.setText("Class" + " "+ listModel.getClass_id());
-        Glide.with(this).load(AppData.IMAGE_URL+listModel.getImage()).into(mProfileImage);
+        mTitle.setText(listModel.getFirst_name() + " " + listModel.getLast_name());
+        tvClass.setText("Class" + " " + listModel.getClass_id());
+        Glide.with(this).load(AppData.IMAGE_URL + listModel.getImage()).into(mProfileImage);
         loadViewPager(listModel);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +96,7 @@ public class StudentActivity extends BaseActivity implements AppBarLayout.OnOffs
         mFragments.add(HomeworkFragment.newInstance(listModel));
         mFragments.add(ExamFragment.newInstance(listModel));
         mFragments.add(FeesFragment.newInstance(listModel));
+        mFragments.add(MyGalleryFragment.newInstance(listModel));
         MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), mFragments);
         viewpager.setAdapter(mainPagerAdapter);
         viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
@@ -141,11 +142,10 @@ public class StudentActivity extends BaseActivity implements AppBarLayout.OnOffs
         int id = item.getItemId();
 
         if (id == R.id.nav_account) {
-            //startNewActivity(AccountProfileActivity.class);
+            startNewActivity(EditProfileActivity.class);
         } else if (id == R.id.nav_about) {
             startNewActivity(AboutUs.class);
-        } else if (id == R.id.nav_reports) ;
-        {
+        } else if (id == R.id.nav_reports) {
             startNewActivity(StudentActivity.class);
         }
 
@@ -156,7 +156,7 @@ public class StudentActivity extends BaseActivity implements AppBarLayout.OnOffs
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(int action) {
 
     }
 }

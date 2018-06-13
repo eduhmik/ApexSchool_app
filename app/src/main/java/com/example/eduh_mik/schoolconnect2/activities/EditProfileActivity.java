@@ -146,7 +146,7 @@ public class EditProfileActivity extends BaseActivity implements GoogleApiClient
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register1);
         ButterKnife.bind(this);
         setTitle("Edit Info");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

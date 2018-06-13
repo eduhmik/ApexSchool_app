@@ -56,7 +56,7 @@
                                 android:paddingLeft="10dp"
                                 android:paddingRight="10dp"
                                 android:tint="@color/colorPrimary"
-                                android:src="@drawable/about_icon_email"/>
+                                android:src="@drawable/ic_phone_black_24dp"/>
                             <android.support.design.widget.TextInputLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -67,10 +67,11 @@
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="Email"
+                                    android:hint="Phone Number"
+                                    android:background="@drawable/btnshapes"
                                     android:padding="10dp"
                                     android:maxLines="1"
-                                    android:inputType="textEmailAddress"
+                                    android:inputType="phone"
                                     android:id="@+id/et_Email"/>
                             </android.support.design.widget.TextInputLayout>
                         </LinearLayout>
@@ -99,9 +100,10 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/et_password"
+                                    android:background="@drawable/btnshapes"
                                     android:maxLines="1"
                                     android:hint="Password"
-                                    android:inputType="text"
+                                    android:inputType="textPassword"
                                     android:padding="10dp" />
                             </android.support.design.widget.TextInputLayout>
                         </LinearLayout>
@@ -112,11 +114,14 @@
                 <android.support.v7.widget.AppCompatButton
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:background="@drawable/btnshapes"
                     android:text="Sign In"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:layout_marginTop="20dp"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/colorPrimary"
+                    android:backgroundTint="#000"
                     android:id="@+id/btn_submit"
                     style="@style/AppTheme.RoundedCornerMaterialButton"/>
             </LinearLayout>
