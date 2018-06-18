@@ -143,6 +143,7 @@ public class HomeworkFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ListResponse<Homework>> call, Throwable t) {
+                _sweetAlertDialog.dismissWithAnimation();
                 Log.e("Error", t.getMessage());
 
             }

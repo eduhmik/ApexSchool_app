@@ -27,6 +27,7 @@ import com.example.eduh_mik.schoolconnect2.fragments.DiaryFragment;
 import com.example.eduh_mik.schoolconnect2.fragments.ExamFragment;
 import com.example.eduh_mik.schoolconnect2.fragments.FeesFragment;
 import com.example.eduh_mik.schoolconnect2.fragments.HomeworkFragment;
+import com.example.eduh_mik.schoolconnect2.fragments.MyActivitesFragment;
 import com.example.eduh_mik.schoolconnect2.fragments.MyGalleryFragment;
 import com.example.eduh_mik.schoolconnect2.interfaces.OnFragmentInteractionListener;
 import com.example.eduh_mik.schoolconnect2.models.ListModel;
@@ -96,6 +97,7 @@ public class StudentActivity extends BaseActivity implements AppBarLayout.OnOffs
         mFragments.add(HomeworkFragment.newInstance(listModel));
         mFragments.add(ExamFragment.newInstance(listModel));
         mFragments.add(FeesFragment.newInstance(listModel));
+        mFragments.add(MyActivitesFragment.newInstance(listModel));
         mFragments.add(MyGalleryFragment.newInstance(listModel));
         MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), mFragments);
         viewpager.setAdapter(mainPagerAdapter);

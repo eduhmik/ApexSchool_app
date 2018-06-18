@@ -24,6 +24,6 @@ public interface ActivitiesRequest {
     @GET("activities")
     Call<ListResponse<Activities>> getActivities();
 
-    @GET("paid")
+    @GET("paid/id/{id}")
     Call<ListResponse<MyActvities>> getMyActivities(@Path("id") String id);
 }

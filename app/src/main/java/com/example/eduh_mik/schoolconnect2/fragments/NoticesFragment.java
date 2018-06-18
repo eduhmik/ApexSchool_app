@@ -233,9 +233,8 @@ public class NoticesFragment extends BaseFragment implements MainActivity.OnMedi
 
             @Override
             public void onFailure(Call<ListResponse<Notices>> call, Throwable t) {
-                Log.e("Notices", t.getMessage());
                 _sweetAlertDialog.dismissWithAnimation();
-
+                Log.e("Notices", t.getMessage());
             }
         });
     }

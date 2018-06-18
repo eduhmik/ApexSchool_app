@@ -190,6 +190,7 @@ public class GalleryFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ListResponse<Gallery>> call, Throwable t) {
                 simpleSwipeRefreshLayout.setRefreshing(false);
+                Log.e("Gallery", t.getMessage());
             }
         });
     }

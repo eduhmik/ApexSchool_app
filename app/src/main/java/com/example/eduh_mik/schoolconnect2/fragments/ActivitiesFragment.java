@@ -286,8 +286,8 @@ public class ActivitiesFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ListResponse<Activities>> call, Throwable t) {
-                Log.e("", t.getMessage());
                 simpleSwipeRefreshLayout.setRefreshing(false);
+                Log.e("", t.getMessage());
             }
         });
     }

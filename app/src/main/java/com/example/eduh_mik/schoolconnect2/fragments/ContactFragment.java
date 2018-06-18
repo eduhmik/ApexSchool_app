@@ -185,9 +185,8 @@ public class ContactFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ListResponse<Contact>> call, Throwable t) {
-                Log.e("Failure", t.getMessage());
                 simpleSwipeRefreshLayout.setRefreshing(false);
-
+                Log.e("Failure", t.getMessage());
             }
 
         });

@@ -26,6 +26,7 @@ import com.example.eduh_mik.schoolconnect2.Retrofit.Response;
 import com.example.eduh_mik.schoolconnect2.Retrofit.ServiceGenerator;
 import com.example.eduh_mik.schoolconnect2.appdata.AppData;
 import com.example.eduh_mik.schoolconnect2.base.BaseActivity;
+import com.example.eduh_mik.schoolconnect2.models.User;
 import com.example.eduh_mik.schoolconnect2.tools.SweetAlertDialog;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -49,6 +50,7 @@ public class EditProfileActivity extends BaseActivity implements GoogleApiClient
     public static String PHOTO_URL="";
     private static final String TAG = "Google Sign In";
     private static final int OUR_REQUEST_CODE = 4902;
+    public User user;
     @BindView(R.id.et_phone_number)
     EditText etPhoneNumber;
     @BindView(R.id.et_password)
@@ -105,6 +107,7 @@ public class EditProfileActivity extends BaseActivity implements GoogleApiClient
         }
         else {
             register(email, firstname, lastname, password, phone);
+            finish();
         }
 
     }
@@ -112,7 +115,7 @@ public class EditProfileActivity extends BaseActivity implements GoogleApiClient
     public void register(String email, String firstname, String lastname, String password, String phone) {
         showSweetDialog("Register", "Creating Account. Please wait...", SweetAlertDialog.PROGRESS_TYPE);
         AccountRequests service = ServiceGenerator.createService(AccountRequests.class);
-        Call<Response> call = service.register(email, firstname, lastname, password, phone);
+        Call<Response> call = service.register(email, firstname, lastname, password, phone, sharedPrefs.getDeviceId());
         call.enqueue(new Callback<Response>() {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
@@ -268,6 +271,7 @@ public class EditProfileActivity extends BaseActivity implements GoogleApiClient
             etEmail.setText(acct.getEmail());
             etFirstName.setText(acct.getGivenName());
             etLastName.setText(acct.getFamilyName());
+            etPhoneNumber.setText(user.getPhone());
             if (acct.getPhotoUrl() != null) {
                 Glide.with(this).load(acct.getPhotoUrl().toString()).apply(RequestOptions.circleCropTransform()).into(ivProfileImage);
                 PHOTO_URL = acct.getPhotoUrl().toString();

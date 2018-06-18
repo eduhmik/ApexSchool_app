@@ -130,8 +130,8 @@ public class FeesFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ListResponse<Fees>> call, Throwable t) {
-                Log.e("fees", t.getMessage());
                 simpleSwipeRefreshLayout.setRefreshing(false);
+                Log.e("fees", t.getMessage());
             }
         });
     }

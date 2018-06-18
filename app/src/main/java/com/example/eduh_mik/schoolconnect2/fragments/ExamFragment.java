@@ -129,8 +129,8 @@ public class ExamFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ListResponse<Exam>> call, Throwable t) {
-                Log.e("fees", t.getMessage());
                 simpleSwipeRefreshLayout.setRefreshing(false);
+                Log.e("fees", t.getMessage());
             }
         });
     }
