@@ -1,39 +1,39 @@
 {
   "project_info": {
-    "project_number": "292278596643",
-    "firebase_url": "https://apex-school-a945d.firebaseio.com",
-    "project_id": "apex-school-a945d",
-    "storage_bucket": "apex-school-a945d.appspot.com"
+    "project_number": "858845390529",
+    "firebase_url": "https://apex-school-60b2f.firebaseio.com",
+    "project_id": "apex-school-60b2f",
+    "storage_bucket": "apex-school-60b2f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:292278596643:android:51fbf1e33f613bff",
+        "mobilesdk_app_id": "1:858845390529:android:b0e41f3c54fd2d54",
         "android_client_info": {
-          "package_name": "com.example.eduh_mik.schoolconnect2"
+          "package_name": "com.virscom.eduh_mik.schoolconnect2"
         }
       },
       "oauth_client": [
         {
-          "client_id": "292278596643-e5ct40jtaqrlmqj0amj62k3ccbj7tj0h.apps.googleusercontent.com",
+          "client_id": "858845390529-encg12ilcg3e9d340i4pnkua2324f485.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.eduh_mik.schoolconnect2",
-            "certificate_hash": "e20b2d71751f7173d69eec36cf96d3849df0f8dd"
+            "package_name": "com.virscom.eduh_mik.schoolconnect2",
+            "certificate_hash": "9d7881f954d40ecdd10d5a4d1c34fe0794a7b987"
           }
         },
         {
-          "client_id": "292278596643-muitivjqaa8prc46tthfuqduk7v9ibjm.apps.googleusercontent.com",
+          "client_id": "858845390529-iqmp760dequjb2fbrq96ujqj0qqfvgii.apps.googleusercontent.com",
           "client_type": 3
         },
         {
-          "client_id": "292278596643-muitivjqaa8prc46tthfuqduk7v9ibjm.apps.googleusercontent.com",
+          "client_id": "858845390529-iqmp760dequjb2fbrq96ujqj0qqfvgii.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA-Ib2ESX_eeKBdbWudesnYvnGRfjc9ci8"
+          "current_key": "AIzaSyBtM81QFNCechsDxi4DZi06SI4LsQqhY34"
         }
       ],
       "services": {
@@ -44,7 +44,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "292278596643-muitivjqaa8prc46tthfuqduk7v9ibjm.apps.googleusercontent.com",
+              "client_id": "858845390529-iqmp760dequjb2fbrq96ujqj0qqfvgii.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

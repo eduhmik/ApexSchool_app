@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_gravity="center_vertical"
     android:layout_height="match_parent"
-    tools:context=".activities.AboutUs">
+    tools:context="com.virscom.eduh_mik.schoolconnect2.activities.AboutUs">
 
 </android.support.constraint.ConstraintLayout>
