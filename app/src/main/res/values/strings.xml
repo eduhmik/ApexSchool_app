@@ -15,4 +15,7 @@
 
     <string name="lblAcc">Select Account Type</string>
     <string name="lblSubAcc">Select Account Head</string>
+
+    //Maps API
+    <string name="google_apikey">AIzaSyB-mb_sOFU8PVEMb1wvw8zB2DwIuYMTlWA</string>
 </resources>

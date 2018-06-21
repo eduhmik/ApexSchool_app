@@ -5,7 +5,7 @@ package com.virscom.eduh_mik.schoolconnect2.appdata;
  */
 
 public class AppData {
-    public static final String GOOGLE_SERVER_CLIENT_ID = "292278596643-muitivjqaa8prc46tthfuqduk7v9ibjm.apps.googleusercontent.com";
+    public static final String GOOGLE_SERVER_CLIENT_ID = "858845390529-iqmp760dequjb2fbrq96ujqj0qqfvgii.apps.googleusercontent.com";
 
     public static int STUDENT_ID;
 

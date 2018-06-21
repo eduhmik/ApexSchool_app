@@ -51,7 +51,7 @@ public class ContactViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse(contact.getPhone()));
+                intent.setData(Uri.parse("tel:"+contact.getPhone()));
                 Log.e("Phone Number", "tel:"+contact.getPhone());
                 _context.startActivity((intent));
 

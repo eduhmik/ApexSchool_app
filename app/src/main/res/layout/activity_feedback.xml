@@ -28,11 +28,12 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:src="@mipmap/dept"
-                    android:textColor="#353a3e" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_person_outline_black_24dp"
+                    android:tint="@color/colorPrimary" />
 
                 <EditText
                     android:id="@+id/et_notice_name"
@@ -50,11 +51,12 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:src="@mipmap/dept"
-                    android:textColor="#353a3e" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_title_black_24dp"
+                    android:tint="@color/colorPrimary" />
 
                 <EditText
                     android:id="@+id/et_notice_title"

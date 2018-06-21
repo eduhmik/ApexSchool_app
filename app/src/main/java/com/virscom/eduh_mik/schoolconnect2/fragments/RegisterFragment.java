@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -18,14 +19,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.virscom.eduh_mik.schoolconnect2.R;
-import com.virscom.eduh_mik.schoolconnect2.Retrofit.AccountRequests;
-import com.virscom.eduh_mik.schoolconnect2.Retrofit.Response;
-import com.virscom.eduh_mik.schoolconnect2.Retrofit.ServiceGenerator;
-import com.virscom.eduh_mik.schoolconnect2.appdata.AppData;
-import com.virscom.eduh_mik.schoolconnect2.base.BaseFragment;
-import com.virscom.eduh_mik.schoolconnect2.interfaces.OnFragmentInteractionListener;
-import com.virscom.eduh_mik.schoolconnect2.tools.SweetAlertDialog;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -35,6 +30,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.intentfilter.androidpermissions.PermissionManager;
+import com.virscom.eduh_mik.schoolconnect2.R;
+import com.virscom.eduh_mik.schoolconnect2.Retrofit.AccountRequests;
+import com.virscom.eduh_mik.schoolconnect2.Retrofit.Response;
+import com.virscom.eduh_mik.schoolconnect2.Retrofit.ServiceGenerator;
+import com.virscom.eduh_mik.schoolconnect2.appdata.AppData;
+import com.virscom.eduh_mik.schoolconnect2.base.BaseFragment;
+import com.virscom.eduh_mik.schoolconnect2.interfaces.OnFragmentInteractionListener;
+import com.virscom.eduh_mik.schoolconnect2.tools.SweetAlertDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,6 +77,7 @@ public class RegisterFragment extends BaseFragment implements GoogleApiClient.On
     EditText etRepeatPassword;
     Unbinder unbinder;
     private OnFragmentInteractionListener mListener;
+
     @OnClick(R.id.btn_Submit)
     public void onViewClicked() {
         validate();
@@ -133,9 +137,16 @@ public class RegisterFragment extends BaseFragment implements GoogleApiClient.On
         initGoogleClient();
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         unbinder = ButterKnife.bind(this, view);
+        showSweetDialog("Google Sign In", "Siging up. Please wait!", SweetAlertDialog.PROGRESS_TYPE);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        _sweetAlertDialog.dismissWithAnimation();
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, OUR_REQUEST_CODE);
-        return view;
     }
 
     @Override
@@ -148,6 +159,7 @@ public class RegisterFragment extends BaseFragment implements GoogleApiClient.On
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
     public void initGoogleClient() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(AppData.GOOGLE_SERVER_CLIENT_ID).requestEmail().build();
         mGoogleApiClient = new GoogleApiClient.Builder(getContext())
@@ -209,7 +221,6 @@ public class RegisterFragment extends BaseFragment implements GoogleApiClient.On
             return;
         }
     }
-
 
 
     public void register(String fname, String lname, String email, String phone, String password) {
@@ -289,23 +300,19 @@ public class RegisterFragment extends BaseFragment implements GoogleApiClient.On
         if (result.isSuccess()) {
             GoogleSignInAccount acct = result.getSignInAccount();
             Log.e("Email", acct.getEmail());
-            if (etEmail !=null && acct.getEmail() !=null) {
+            if (etEmail != null && acct.getEmail() != null) {
                 etEmail.setText(acct.getEmail());
                 etfirstName.setText(acct.getGivenName());
                 etLastName.setText(acct.getFamilyName());
-            }else {
-                Log.e("ETMAIL","ETMAIL is null");
-            }
+                if (acct.getPhotoUrl() != null) {
+                    Glide.with(this).load(acct.getPhotoUrl().toString()).apply(RequestOptions.circleCropTransform()).into(ivProfile);
+                    PHOTO_URL = acct.getPhotoUrl().toString();
+                } else {
 
-
-            if (acct.getPhotoUrl().toString().length()>0) {
-                //Glide.with(this).load(acct.getPhotoUrl().toString()).apply(RequestOptions.circleCropTransform()).into(ivProfile);
-                //PHOTO_URL = acct.getPhotoUrl().toString();
+                }
             } else {
-
+                showToast("Sign In Failure");
             }
-        } else {
-            showToast("Sign In Failure");
         }
     }
 }

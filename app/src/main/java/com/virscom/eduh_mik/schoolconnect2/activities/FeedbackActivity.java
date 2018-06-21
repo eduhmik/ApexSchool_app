@@ -59,7 +59,7 @@ public class FeedbackActivity extends BaseActivity {
     }
 
     public void addComment(String name, String title, String description) {
-        showSweetDialog("Add Notice", "Adding new Notice. Please wait...", SweetAlertDialog.PROGRESS_TYPE);
+        showSweetDialog("Add Feedback", "Adding new Feedback. Please wait...", SweetAlertDialog.PROGRESS_TYPE);
         CommentsRequest service = ServiceGenerator.createService(CommentsRequest.class);
         Call<ListResponse<Comment>> call = service.addComment(name, title, description);
         call.enqueue(new Callback<ListResponse<Comment>>() {
@@ -70,9 +70,12 @@ public class FeedbackActivity extends BaseActivity {
                 if (response.body() != null) {
                     if (TextUtils.equals(response.body().getStatus(), "success")) {
                         showToast(response.body().getMessage());
+                        etNoticeName.setText(" ");
+                        etNoticeTitle.setText(" ");
+                        etDescription.setText(" ");
                     } else {
                         showToast(response.body().getMessage());
-                        showSweetDialog("Failed!", "Sending Diary failed.", SweetAlertDialog.ERROR_TYPE);
+                        showSweetDialog("Failed!", "Sending feedback failed.", SweetAlertDialog.ERROR_TYPE);
                     }
                 } else {
                     showToast("No response from server");
