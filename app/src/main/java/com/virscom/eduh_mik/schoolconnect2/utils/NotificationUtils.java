@@ -32,6 +32,12 @@ import java.util.Date;
 import java.util.List;
 
 public class NotificationUtils {
+    public static final String PUSH_INTENT = "push intent . . .";
+
+    public static final String TAG_NEW_DIARY = "new diary";
+
+
+
     private static String TAG = NotificationUtils.class.getSimpleName();
 
     private Context mContext;

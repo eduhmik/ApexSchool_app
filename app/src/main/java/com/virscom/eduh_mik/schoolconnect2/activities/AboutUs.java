@@ -28,13 +28,13 @@ public class AboutUs extends AppCompatActivity {
                 .isRTL(false)
 
                 .setImage(R.drawable.apexlogo)
-                .addItem(new Element().setTitle("Version 6.2"))
+                .addItem(new Element().setTitle("Version 1.0"))
                 .addGroup("Connect with us")
                 .addEmail("email@gmail.com")
-                .addWebsite("http://medyo.github.io/")
-                .addFacebook("facebook.com")
-                .addTwitter("twitter.com")
-                .addPlayStore("com.ideashower.yummy.pro")
+                .addWebsite("http://apexjuniorschool.com")
+                .addFacebook("www.facebook.com/apexjuniorschool/")
+                .addTwitter("https://twitter.com/apex_junior")
+                .addPlayStore("https://play.google.com/apps/testing/com.virscom.eduh_mik.schoolconnect2")
                 //.addItem(getCopyRightsElement())
                 .create();
 

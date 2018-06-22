@@ -140,7 +140,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_content"
-                android:text="Jayden was well behaved today. He showed keenness and was actively participating in class. However, he came to school late and would advice you to prepare him in time."/>
+                android:text="Jayden was well behaved today. He showed keenness and was actively participating in class. However, he came to school late and would advice you to prepare him in time."
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
 
         </LinearLayout>

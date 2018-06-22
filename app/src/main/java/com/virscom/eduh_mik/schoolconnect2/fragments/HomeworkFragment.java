@@ -89,7 +89,7 @@ public class HomeworkFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 simpleSwipeRefreshLayout.setRefreshing(true);
-                prepareContactData(_listModel.getStudent_id());
+                prepareContactData(_listModel.getClass_id());
             }
         });
         return view;
@@ -98,7 +98,7 @@ public class HomeworkFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        prepareContactData(_listModel.getStudent_id());
+        prepareContactData(_listModel.getClass_id());
     }
 
     @Override
@@ -107,7 +107,7 @@ public class HomeworkFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         homeworkAdapter = new HomeworkAdapter(getActivity(), homeworkList);
         recyclerView.setAdapter(homeworkAdapter);
-        prepareContactData(_listModel.getStudent_id());
+        prepareContactData(_listModel.getClass_id());
     }
 
     public void validate() {
@@ -190,10 +190,10 @@ public class HomeworkFragment extends BaseFragment {
 //        });
 //    }
 
-    private void prepareContactData(String id) {
+    private void prepareContactData(String class_id) {
         simpleSwipeRefreshLayout.setRefreshing(true);
         HomeworkRequests service = ServiceGenerator.createService(HomeworkRequests.class);
-        Call<ListResponse<Homework>> call = service.getHomework(id);
+        Call<ListResponse<Homework>> call = service.getHomework(class_id);
         call.enqueue(new Callback<ListResponse<Homework>>() {
             @Override
             public void onResponse(Call<ListResponse<Homework>> call, Response<ListResponse<Homework>> response) {

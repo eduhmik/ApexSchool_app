@@ -1,7 +1,10 @@
 package com.virscom.eduh_mik.schoolconnect2.models;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Exam {
-    private String student_id, ex_id, type, year, term, section, maths, english, kisw, scie, ss, computer;
+    private String student_id, ex_id, type, year, term, section, maths, english, kisw, scie, ss, computer, ire_cre, creative, musical, date;
 
     public String getTerm() {
         return term;
@@ -19,8 +22,20 @@ public class Exam {
         this.scie = scie;
     }
 
+    public String getIre_cre() {
+        return ire_cre;
+    }
+
+    public String getCreative() {
+        return creative;
+    }
+
+    public String getMusical() {
+        return musical;
+    }
+
     public Exam(String student_id, String ex_id, String type, String year, String term, String section, String maths,
-                String english, String kisw, String scie, String ss, String computer){
+                String english, String kisw, String scie, String ss, String computer, String ire_cre, String creative, String musical, String date){
         this.student_id = student_id;
         this.scie = scie;
 
@@ -34,6 +49,10 @@ public class Exam {
         this.ss = ss;
         this.computer = computer;
         this.term = term;
+        this.ire_cre = ire_cre;
+        this.creative = creative;
+        this.musical = musical;
+        this.date = date;
 
     }
 
@@ -115,5 +134,31 @@ public class Exam {
 
     public void setComputer(String computer) {
         this.computer = computer;
+    }
+
+    public String getDate() {
+        try {
+            Date date=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(this.date);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            return simpleDateFormat.format(date);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return "";
+        }
+
+    }
+
+    public String getDay(){
+        try{
+            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(this.date);
+            SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+
+            return sdf.format(date);
+        } catch (Exception e){
+            e.printStackTrace();
+            return "";
+        }
     }
 }

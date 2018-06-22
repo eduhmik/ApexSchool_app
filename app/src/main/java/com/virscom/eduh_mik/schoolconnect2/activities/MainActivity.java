@@ -29,15 +29,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.virscom.eduh_mik.schoolconnect2.R;
-import com.virscom.eduh_mik.schoolconnect2.adapters.MainPagerAdapter;
-import com.virscom.eduh_mik.schoolconnect2.appdata.AppData;
-import com.virscom.eduh_mik.schoolconnect2.base.BaseActivity;
-import com.virscom.eduh_mik.schoolconnect2.fragments.ActivitiesFragment;
-import com.virscom.eduh_mik.schoolconnect2.fragments.ContactFragment;
-import com.virscom.eduh_mik.schoolconnect2.fragments.GalleryFragment;
-import com.virscom.eduh_mik.schoolconnect2.fragments.NoticesFragment;
-import com.virscom.eduh_mik.schoolconnect2.interfaces.OnFragmentInteractionListener;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -47,6 +38,17 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.intentfilter.androidpermissions.PermissionManager;
+import com.virscom.eduh_mik.schoolconnect2.R;
+import com.virscom.eduh_mik.schoolconnect2.adapters.MainPagerAdapter;
+import com.virscom.eduh_mik.schoolconnect2.appdata.AppData;
+import com.virscom.eduh_mik.schoolconnect2.base.BaseActivity;
+import com.virscom.eduh_mik.schoolconnect2.fragments.ActivitiesFragment;
+import com.virscom.eduh_mik.schoolconnect2.fragments.ContactFragment;
+import com.virscom.eduh_mik.schoolconnect2.fragments.GalleryFragment;
+import com.virscom.eduh_mik.schoolconnect2.fragments.NoticesFragment;
+import com.virscom.eduh_mik.schoolconnect2.interfaces.OnFragmentInteractionListener;
+import com.virscom.eduh_mik.schoolconnect2.service.Push;
+import com.virscom.eduh_mik.schoolconnect2.utils.NotificationUtils;
 
 import java.util.ArrayList;
 
@@ -86,8 +88,29 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navView.setNavigationItemSelectedListener(this);
         loadViewPager();
         initGoogleClient();
+        processIntent(getIntent());
     }
 
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        processIntent(intent);
+
+    }
+    public void processIntent(Intent intent){
+        if(intent.getExtras() != null){
+            Push push = gson.fromJson(intent.getStringExtra(NotificationUtils.PUSH_INTENT),Push.class);
+            if (push.getTag() == NotificationUtils.TAG_NEW_DIARY){
+                showToast(push.getBody());
+                startNewActivity(StudentActivity.class);
+            }else{
+
+            }
+
+        }
+
+    }
     public void loadViewPager() {
         ArrayList<Fragment> mFragments = new ArrayList<>();
         mFragments.add(NoticesFragment.newInstance());

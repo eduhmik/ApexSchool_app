@@ -6,15 +6,15 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 import com.virscom.eduh_mik.schoolconnect2.activities.MainActivity;
 import com.virscom.eduh_mik.schoolconnect2.application.Config;
 import com.virscom.eduh_mik.schoolconnect2.utils.NotificationUtils;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
@@ -59,6 +59,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationUtils.playNotificationSound();
         }else{
             // If the app is in background, firebase itself handles the notification
+            NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+            notificationUtils.playNotificationSound();
         }
     }
 
@@ -67,9 +69,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
             // app is in foreground, broadcast the push message
-            Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
-            pushNotification.putExtra("message", push.getMessage());
-            LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
+            Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+            resultIntent.putExtra(NotificationUtils.PUSH_INTENT, new Gson().toJson(push));
+            startActivity(resultIntent);
+
 
             // play notification sound
             NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
@@ -77,14 +80,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         } else {
             // app is in background, show the notification in notification tray
             Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
-            resultIntent.putExtra("message", push.getMessage());
+            resultIntent.putExtra(NotificationUtils.PUSH_INTENT, new Gson().toJson(push));
 
             // check for image attachment
-            if (TextUtils.isEmpty(imageUrl)) {
-                showNotificationMessage(getApplicationContext(), title, push.getMessage(), timestamp, resultIntent);
+            if (push.getImage() == null || TextUtils.isEmpty(push.getImage())) {
+                showNotificationMessage(getApplicationContext(), push.getTag(), push.getBody(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()), resultIntent);
             } else {
                 // image is present, show notification with image
-                showNotificationMessageWithBigImage(getApplicationContext(), title, push.getMessage(), timestamp, resultIntent, imageUrl);
+                showNotificationMessageWithBigImage(getApplicationContext(), push.getTag(), push.getBody(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()), resultIntent, push.getImage());
             }
         }
     }

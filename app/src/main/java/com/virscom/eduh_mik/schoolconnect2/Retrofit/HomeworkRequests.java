@@ -18,5 +18,5 @@ public interface HomeworkRequests {
     );
 
     @GET("homeworks/id/{id}")
-    Call<ListResponse<Homework>> getHomework(@Path("id")String id);
+    Call<ListResponse<Homework>> getHomework(@Path("id")String class_id);
 }

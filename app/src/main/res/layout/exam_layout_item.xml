@@ -465,7 +465,7 @@
                     android:id="@+id/etTtlMarks"
                     android:layout_weight="0.7"
                     android:text="Total Marks"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorAccent"
                     android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
                 <TextView
@@ -495,7 +495,7 @@
                     android:id="@+id/etPosition"
                     android:layout_weight="0.7"
                     android:text="Position"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorAccent"
                     android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
                 <TextView

@@ -50,7 +50,8 @@ public class ExamVH extends RecyclerView.ViewHolder {
 
     public void bind(Exam exam) {
        tvName.setText("Term"+ " "+exam.getTerm());
-       tvStartDate.setText(exam.getYear());
+       tvStartDate.setText(exam.getDate());
+       etDay.setText(exam.getDay());
        tvClass.setText(exam.getType());
         etMathMark.setText(exam.getMaths());
         etEngMark.setText(exam.getEnglish());
@@ -58,6 +59,9 @@ public class ExamVH extends RecyclerView.ViewHolder {
         etSsMarks.setText(exam.getSs());
         etScieMark.setText(exam.getScie());
         etCompMark.setText(exam.getComputer());
+        etIreMark.setText(exam.getIre_cre());
+        etCreativeMark.setText(exam.getCreative());
+        etMusMark.setText(exam.getMusical());
 
 
 

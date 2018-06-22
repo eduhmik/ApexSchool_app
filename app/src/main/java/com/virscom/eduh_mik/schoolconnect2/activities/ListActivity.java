@@ -31,7 +31,6 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
     RecyclerView recyclerView;
     @BindView(R.id.simpleSwipeRefreshLayout)
     SwipeRefreshLayout simpleSwipeRefreshLayout;
-
     private ListAdapter listAdapter;
     private ArrayList<ListModel> galleryList = new ArrayList<>();
 
@@ -44,7 +43,7 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         //listAdapter = new ListAdapter(galleryList);
         recyclerView.setLayoutManager(layoutManager);
-        //Section section = new Gson().fromJson(getIntent().getExtras().getString("section"), Section.class);
+        //ListModel listModel = new Gson().fromJson(getIntent().getExtras().getString("list"), ListModel.class);
         simpleSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -53,6 +52,7 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
             }
         });
         Log.e("Phone", String.valueOf(sharedPrefs.getUser().getPhone()));
+        //Log.e("List", listModel.getClass_id());
         filteredData(sharedPrefs.getUser().getPhone());
     }
 
